@@ -1,0 +1,103 @@
+/**
+ * Design tokens — The Forgotten Archives
+ *
+ * The five palette colours are fixed by the project's visual direction.
+ * Additional neutrals are documented below and exist only for accessible
+ * contrast; they must not be used as decorative brand colours.
+ *
+ * Breakpoints (documented, not tokens — custom properties cannot be used
+ * inside media queries):
+ *   --bp-mobile:  40rem  / 640px
+ *   --bp-tablet:  48rem  / 768px
+ *   --bp-desktop: 64rem / 1024px
+ */
+:root {
+  color-scheme: dark;
+
+  /* ------------------------------------------------------------------ */
+  /* Palette (fixed)                                                     */
+  /* ------------------------------------------------------------------ */
+  --color-charcoal: #171714;
+  --color-dark-wood: #30251d;
+  --color-leather-brown: #765a3b;
+  --color-antique-gold: #b49a6b;
+  --color-parchment: #d9ccad;
+
+  /* ------------------------------------------------------------------ */
+  /* Additional neutrals (contrast support only)                         */
+  /* ------------------------------------------------------------------ */
+  /* Muted text on dark surfaces — 6.66:1 on charcoal, 5.53:1 on wood. */
+  --color-ash: #a89c8a;
+  /* Deep ink for text on parchment — 10.54:1 on parchment. */
+  --color-ink: #241c15;
+
+  /* Derived translucent tones (not new hues). */
+  --color-line-subtle: rgba(180, 154, 107, 0.24);
+  --color-line-strong: rgba(180, 154, 107, 0.5);
+  --color-ink-line: rgba(48, 37, 29, 0.3);
+  --color-gold-wash: rgba(180, 154, 107, 0.12);
+
+  /* ------------------------------------------------------------------ */
+  /* Typography                                                          */
+  /* ------------------------------------------------------------------ */
+  --font-heading: 'Cinzel', 'Times New Roman', serif;
+  --font-body: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.125rem;
+  --text-lg: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  --text-2xl: clamp(1.875rem, 1.5rem + 1.6vw, 2.5rem);
+  --text-3xl: clamp(2.25rem, 1.7rem + 2.4vw, 3.5rem);
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.6;
+
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.16em;
+
+  /* ------------------------------------------------------------------ */
+  /* Spacing                                                             */
+  /* ------------------------------------------------------------------ */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* ------------------------------------------------------------------ */
+  /* Borders, radii, shadows                                             */
+  /* ------------------------------------------------------------------ */
+  --border-width: 1px;
+  --border-style: solid;
+  --border-subtle: var(--border-width) var(--border-style) var(--color-line-subtle);
+  --border-strong: var(--border-width) var(--border-style) var(--color-line-strong);
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --shadow-inset: inset 0 0 0 1px rgba(48, 37, 29, 0.18);
+
+  /* ------------------------------------------------------------------ */
+  /* Motion                                                              */
+  /* ------------------------------------------------------------------ */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 320ms ease;
+
+  /* ------------------------------------------------------------------ */
+  /* Layout                                                              */
+  /* ------------------------------------------------------------------ */
+  --content-width: 72rem;
+  --measure: 68ch;
+  --gutter: clamp(var(--space-3), 4vw, var(--space-6));
+  --section-spacing: clamp(var(--space-6), 7vw, var(--space-8));
+}

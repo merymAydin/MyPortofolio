@@ -1,0 +1,48 @@
+/* Shared button primitive. Used by upcoming correspondence and dossier actions. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-5);
+  border: var(--border-width) solid var(--color-antique-gold);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-antique-gold);
+  color: var(--color-charcoal);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.button:hover {
+  border-color: var(--color-parchment);
+  background-color: var(--color-parchment);
+  color: var(--color-charcoal);
+}
+
+.button:disabled,
+.button[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.button--quiet {
+  background-color: transparent;
+  color: var(--color-antique-gold);
+}
+
+.button--quiet:hover {
+  border-color: var(--color-line-strong);
+  background-color: var(--color-gold-wash);
+  color: var(--color-parchment);
+}

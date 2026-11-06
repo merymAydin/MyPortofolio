@@ -1,0 +1,59 @@
+/* Shared page surface: parchment on the dark archive background. */
+.page {
+  --focus-ring-color: var(--color-charcoal);
+
+  max-width: 52rem;
+  padding: clamp(var(--space-5), 5vw, var(--space-7));
+  border: var(--border-width) solid var(--color-ink-line);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-parchment);
+  box-shadow: var(--shadow-md), var(--shadow-inset);
+  color: var(--color-charcoal);
+}
+
+.page a {
+  color: var(--color-dark-wood);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.page a:hover {
+  color: var(--color-charcoal);
+}
+
+.page__eyebrow {
+  margin-bottom: var(--space-3);
+  color: var(--color-dark-wood);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.page__title {
+  margin-bottom: var(--space-4);
+  color: var(--color-charcoal);
+  font-size: var(--text-3xl);
+}
+
+.page__description {
+  max-width: 55ch;
+  color: var(--color-dark-wood);
+  font-size: var(--text-lg);
+}
+
+.page__note {
+  margin-top: var(--space-6);
+  padding-top: var(--space-3);
+  border-top: var(--border-width) solid var(--color-ink-line);
+  color: var(--color-dark-wood);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+}
+
+.page code {
+  border-color: var(--color-ink-line);
+  background-color: var(--color-dark-wood);
+  color: var(--color-parchment);
+}
