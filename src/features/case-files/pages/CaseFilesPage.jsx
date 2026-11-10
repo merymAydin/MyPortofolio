@@ -1,39 +1,36 @@
-﻿import { Link } from 'react-router-dom'
-import { ROUTES } from '../../../app/routePaths.js'
 import { projects } from '../../../data/projects.js'
+import BoardMap from '../components/BoardMap.jsx'
+import CaseFileCard from '../components/CaseFileCard.jsx'
+import InvestigationThreads from '../components/InvestigationThreads.jsx'
 import './case-files.css'
 
 export default function CaseFilesPage() {
   return (
     <main className="case-files-page">
-      <section className="case-files-paper" aria-labelledby="case-files-title">
-        <p className="case-files-paper__eyebrow">Archive III</p>
-        <h1 id="case-files-title" className="case-files-paper__title">Case Files</h1>
+      <div className="case-board">
+        <div className="case-board__backdrop" aria-hidden="true" />
 
-        <div className="case-files-grid">
-          {projects.map((project) => (
-            <Link
-              key={project.slug}
-              className={`case-file case-file--${project.slug}`}
-              to={ROUTES.caseFile(project.slug)}
-            >
-              {project.image ? (
-                <img className="case-file__image" src={project.image} alt="" />
-              ) : (
-                <span
-                  className="case-file__image-slot"
-                  role="img"
-                  aria-label={`${project.title} image slot; project image not supplied yet`}
-                >
-                  Project image to be supplied
-                </span>
-              )}
-              <span className="case-file__title">{project.title}</span>
-            </Link>
-          ))}
+        <div className="case-board__inner">
+          <header className="board-heading">
+            <span className="board-heading__pin brass-pin" aria-hidden="true" />
+            <p className="board-heading__eyebrow">Archive III · Project Dossiers</p>
+            <h1 id="case-files-title">Case Files</h1>
+            <p className="board-heading__subline">Selected investigations · Evidence index</p>
+            <span className="board-heading__stamp" aria-hidden="true">
+              Private
+            </span>
+          </header>
+
+          <BoardMap />
+          <InvestigationThreads variant="overview" />
+
+          <section className="case-board__grid" aria-labelledby="case-files-title">
+            {projects.map((project, index) => (
+              <CaseFileCard key={project.slug} project={project} position={index + 1} />
+            ))}
+          </section>
         </div>
-      </section>
+      </div>
     </main>
   )
 }
-
