@@ -1,5 +1,5 @@
 /**
- * A pinned parchment section on the case-study board.
+ * A pinned parchment section on a case-study board.
  *
  * @param {Object} props
  * @param {string} [props.id] - Optional anchor id.
@@ -9,10 +9,10 @@
  */
 export default function CasePaper({ id, title, className = '', children }) {
   return (
-    <section id={id} className={`case-paper ${className}`.trim()}>
-      <span className="case-paper__pin brass-pin" aria-hidden="true" />
-      <h2 className="case-paper__heading">{title}</h2>
-      <div className="case-paper__body">{children}</div>
+    <section id={id} className={`dossier-paper ${className}`.trim()}>
+      <span className="brass-pin dossier-paper__pin" aria-hidden="true" />
+      <h2 className="dossier-paper__heading">{title}</h2>
+      <div className="dossier-paper__body">{children}</div>
     </section>
   )
 }

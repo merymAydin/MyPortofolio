@@ -1,0 +1,369 @@
+/* Twitter Clone dossier: the same physical board language, with a separate composition. */
+.case-detail-page--twitter .case-detail-board__backdrop {
+  background-color: #271b15;
+  background-image:
+    linear-gradient(180deg, rgba(27, 16, 11, .68), rgba(36, 23, 15, .82)),
+    url('/reference/london-newspaper-wall.png');
+  background-size: cover;
+  background-position: center top;
+}
+
+.case-detail-page--twitter .case-detail-board__backdrop::before {
+  opacity: .1;
+  mask-image: none;
+}
+
+.twitter-case-layout {
+  position: relative;
+  width: min(100%, 98rem);
+  height: 79rem;
+  margin: 0 auto;
+}
+
+.twitter-case-layout > * {
+  box-sizing: border-box;
+}
+
+.twitter-case-layout .dossier-paper {
+  position: absolute;
+}
+
+.twitter-case-title {
+  z-index: 6;
+  top: .25rem;
+  left: 25.5%;
+  width: 48%;
+  min-height: 10.5rem;
+  --paper-rotation: -.8deg;
+}
+
+.twitter-case-title h1 {
+  max-width: none;
+  font-size: clamp(2.35rem, 4vw, 4rem);
+  text-transform: uppercase;
+}
+
+.twitter-interface {
+  z-index: 4;
+  top: 10rem;
+  left: 28%;
+  width: 46%;
+  min-height: 28rem;
+  --paper-rotation: -.5deg;
+}
+
+.twitter-interface img {
+  display: block;
+  width: 100%;
+  max-height: 28rem;
+  object-fit: contain;
+  filter: sepia(.18) contrast(1.04);
+}
+
+.twitter-interface .project-illustration__frame {
+  background: #cdb487;
+}
+
+.twitter-interface figcaption {
+  text-align: left;
+}
+
+.twitter-post-fragment,
+.twitter-notification-fragment {
+  padding: 1rem 1.1rem;
+  background: #211d1a;
+  color: #eadbb9;
+  box-shadow: .35rem .55rem .7rem rgba(22, 12, 7, .42);
+}
+
+.twitter-post-fragment {
+  z-index: 8;
+  top: 16.5rem;
+  left: 51%;
+  width: 22%;
+  --paper-rotation: 3deg;
+}
+
+.twitter-notification-fragment {
+  z-index: 8;
+  top: 27rem;
+  left: 76%;
+  width: 22%;
+  --paper-rotation: -2deg;
+}
+
+.twitter-post-fragment::before,
+.twitter-notification-fragment::before {
+  background: linear-gradient(145deg, #302a24, #171514 78%);
+  clip-path: polygon(1% 2%, 18% 0, 35% 1%, 53% 0, 72% 1%, 99% 0, 100% 98%, 78% 100%, 58% 98%, 38% 100%, 18% 98%, 0 100%, 1% 52%);
+}
+
+.twitter-post-fragment::after,
+.twitter-notification-fragment::after {
+  display: none;
+}
+
+.twitter-post-fragment__pin,
+.twitter-notification-fragment__pin {
+  top: -.52rem;
+  left: 50%;
+}
+
+.twitter-fragment__label {
+  margin: 0 0 .55rem;
+  color: #c9ad7b !important;
+  font-family: var(--font-mono) !important;
+  font-size: .55rem !important;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.twitter-post-fragment strong,
+.twitter-notification-fragment strong {
+  color: #f2e4c7;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+}
+
+.twitter-post-fragment p:not(.twitter-fragment__label) {
+  color: #ddcba5;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+}
+
+.twitter-fragment__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem .55rem;
+  margin-top: .65rem;
+  color: #b89c70;
+  font-family: var(--font-mono);
+  font-size: .57rem;
+  text-transform: uppercase;
+}
+
+.twitter-notification-fragment ul {
+  display: grid;
+  gap: .35rem;
+  margin: .55rem 0 0;
+  padding-left: 1rem;
+  color: #ddcba5;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+}
+
+.twitter-stack-lines p {
+  margin: .35rem 0;
+  font-size: .92rem;
+}
+
+.twitter-stack-lines strong {
+  color: #4b3323;
+}
+
+.twitter-record-paper {
+  padding: 1.25rem 1.35rem;
+}
+
+.twitter-record-paper .case-study-note {
+  margin-top: .25rem;
+}
+
+.twitter-overview {
+  z-index: 5;
+  top: 12rem;
+  left: .5%;
+  width: 25.5%;
+  --paper-rotation: -1.25deg;
+}
+
+.twitter-features {
+  z-index: 6;
+  top: 32rem;
+  left: .8%;
+  width: 27%;
+  --paper-rotation: .7deg;
+}
+
+.twitter-stack {
+  z-index: 8;
+  top: .55rem;
+  left: 75%;
+  width: 24.5%;
+  --paper-rotation: 1deg;
+}
+
+.twitter-architecture {
+  z-index: 7;
+  top: 13rem;
+  left: 70%;
+  width: 24%;
+  --paper-rotation: -1.2deg;
+}
+
+.twitter-architecture .architecture-sketch {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 15rem;
+  gap: .55rem;
+}
+
+.twitter-architecture .architecture-sketch svg {
+  display: none;
+}
+
+.twitter-architecture .architecture-node {
+  min-height: 0;
+}
+
+.twitter-highlights {
+  z-index: 9;
+  top: 38.5rem;
+  left: 50%;
+  width: 30%;
+  --paper-rotation: -.7deg;
+}
+
+.twitter-integrations {
+  z-index: 6;
+  top: 38rem;
+  left: 76%;
+  width: 23.5%;
+  --paper-rotation: 1.3deg;
+}
+
+.twitter-evidence {
+  z-index: 6;
+  top: 46rem;
+  left: 24%;
+  width: 31%;
+  --paper-rotation: .9deg;
+}
+
+.twitter-evidence__capture {
+  margin: 0 0 .7rem;
+  padding: .35rem;
+  border: 1px solid rgba(75, 51, 30, .48);
+  background: rgba(228, 210, 170, .62);
+  transform: rotate(-.7deg);
+}
+
+.twitter-evidence__capture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: sepia(.12) contrast(1.02);
+}
+
+.twitter-evidence__capture figcaption {
+  margin-top: .25rem;
+  color: #5f4b34;
+  font-family: var(--font-mono);
+  font-size: .55rem;
+  letter-spacing: .04em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.twitter-status {
+  z-index: 9;
+  top: 59rem;
+  left: 57%;
+  width: 25%;
+  --paper-rotation: -1deg;
+}
+
+@media (max-width: 82rem) {
+  .twitter-case-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+    width: min(100%, 46rem);
+    height: auto;
+  }
+
+  .twitter-case-layout > :not(.investigation-threads) {
+    position: relative;
+    inset: auto;
+    align-self: stretch;
+    width: auto;
+    max-width: none;
+    min-height: 0;
+    margin: 0 .2rem;
+  }
+
+  .twitter-case-layout .investigation-threads {
+    display: none;
+  }
+
+  .twitter-case-title { order: 0; }
+  .twitter-interface { order: 1; width: 96% !important; align-self: flex-end !important; }
+  .twitter-post-fragment,
+  .twitter-notification-fragment { order: 2; width: 86% !important; align-self: flex-end !important; }
+  .twitter-overview { order: 3; width: 84% !important; align-self: flex-start !important; }
+  .twitter-features { order: 4; width: 94% !important; align-self: flex-end !important; }
+  .twitter-stack { order: 5; width: 88% !important; align-self: flex-start !important; }
+  .twitter-architecture { order: 6; width: 94% !important; align-self: flex-end !important; }
+  .twitter-highlights { order: 7; width: 88% !important; align-self: flex-start !important; }
+  .twitter-integrations { order: 8; width: 94% !important; align-self: flex-end !important; }
+  .twitter-evidence { order: 9; width: 86% !important; align-self: flex-start !important; }
+  .twitter-status { order: 10; width: 94% !important; align-self: flex-end !important; }
+}
+
+@media (max-width: 48rem) {
+  .twitter-case-layout {
+    gap: 1.15rem;
+    width: min(100%, 38rem);
+    max-width: 100%;
+  }
+
+  .twitter-case-layout > :not(.investigation-threads) {
+    max-width: calc(100vw - 1.9rem) !important;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .twitter-case-title {
+    padding: 1.25rem 1rem;
+  }
+
+  .twitter-case-title h1 {
+    font-size: clamp(1.8rem, 8vw, 2.35rem);
+    overflow-wrap: anywhere;
+  }
+
+  .twitter-interface {
+    width: 100% !important;
+    align-self: center !important;
+  }
+
+  .twitter-post-fragment,
+  .twitter-notification-fragment {
+    width: 100% !important;
+    align-self: center !important;
+  }
+
+  .twitter-interface img {
+    max-height: none;
+  }
+
+  .twitter-overview,
+  .twitter-features,
+  .twitter-stack,
+  .twitter-architecture,
+  .twitter-highlights,
+  .twitter-integrations,
+  .twitter-evidence,
+  .twitter-status {
+    width: 100% !important;
+    align-self: center !important;
+  }
+
+  .twitter-case-layout .dossier-paper {
+    max-width: calc(100vw - 2.2rem);
+  }
+
+  .twitter-case-layout .dossier-paper p,
+  .twitter-case-layout .dossier-paper li {
+    overflow-wrap: anywhere;
+  }
+}

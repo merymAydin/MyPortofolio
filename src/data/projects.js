@@ -19,6 +19,7 @@ export const projects = [
       { label: 'Backend source', url: 'https://github.com/merymAydin/istanbul-kart-clone' },
     ],
     caseStudy: {
+      displayTitle: 'The IstanbulKart Investigation',
       overview: 'The project brings Istanbulkart product applications, identity review, wallet actions, and card activity into a web experience. Its source describes a flow from account registration and KYC review to card management and transit transactions.',
       features: [
         'Account registration and sign-in with Cloudflare Turnstile verification',
@@ -30,7 +31,7 @@ export const projects = [
       ],
       stack: {
         frontend: ['React 19', 'TypeScript', 'Vite', 'React Router', 'Axios', 'Framer Motion', 'styled-components'],
-        backend: ['Java 17', 'Spring Boot 3.3', 'Spring Web', 'Spring Security', 'Spring Data JPA', 'Hibernate', 'Bean Validation', 'JJWT'],
+        backend: ['Java 17', 'Spring Boot 3.3', 'Spring Web', 'Spring Security', 'Spring Data JPA', 'Hibernate', 'Bean Validation', 'JWT (JJWT)'],
         databaseDevOps: ['PostgreSQL', 'Docker', 'Nginx'],
         external: [
           { name: 'Cloudflare Turnstile', note: 'Used in account flows and verified by the backend.' },
@@ -85,19 +86,92 @@ export const projects = [
     title: 'Twitter Clone',
     image: '/reference/x.png',
     description: null,
-    technologies: null,
+    technologies: ['React', 'JavaScript', 'Vite', 'Redux Toolkit', 'Spring Boot', 'PostgreSQL', 'Google Gemini', 'Stripe'],
     demoUrl: 'https://twitter.software/',
     githubLinks: [],
+    caseStudy: {
+      displayTitle: 'Twitter Clone',
+      overview: 'A full-stack social media application inspired by Twitter (X), with reported social-network features, a Spring Boot backend, and integrations for Google Gemini and Stripe.',
+      features: [
+        'User authentication and JWT authorization',
+        'Create, edit and delete tweets',
+        'Likes, comments, retweets and quote tweets',
+        'Follow and unfollow relationships',
+        'Bookmarks and personalized feeds',
+        'Notifications and mention detection',
+        'Google Gemini tools for tweet rewriting, summarization, analysis and AI chat',
+        'Stripe subscription and payment workflows',
+      ],
+      stack: {
+        frontend: ['React', 'JavaScript', 'Vite', 'Redux Toolkit', 'React Router', 'Axios', 'Tailwind CSS'],
+        backend: ['Java', 'Spring Boot', 'Spring Security', 'JWT', 'JPA / Hibernate'],
+        databaseDevOps: ['PostgreSQL', 'Flyway'],
+        external: [
+          { name: 'Google Gemini', note: 'Reported AI integration for rewriting, summaries, analysis and chat.' },
+          { name: 'Stripe', note: 'Reported subscription and payment workflows.' },
+        ],
+      },
+      architecture: [
+        { title: 'Client', detail: 'React · JavaScript · API scaffold' },
+        { title: 'REST API', detail: 'Spring Boot · Spring Security · JWT' },
+        { title: 'Persistence', detail: 'JPA / Hibernate · PostgreSQL · Flyway' },
+      ],
+      challenges: [
+        { title: 'Resource ownership', detail: 'JWT authentication and authorization are reported as the boundary for protected resources.' },
+        { title: 'Tweet statistics concurrency', detail: 'Pessimistic write locking is reported for tweet-statistic updates.' },
+        { title: 'Stripe reliability', detail: 'Idempotency, subscription creation and webhook reliability are reported integration concerns.' },
+        { title: 'Gemini abstraction', detail: 'A Gemini Gateway abstraction is reported for AI operations.' },
+      ],
+      status: {
+        implemented: 'The project brief reports backend functionality across authentication, social interactions, AI and payments.',
+        caveats: 'The frontend is currently an API integration starter/scaffold; major frontend features are not yet complete. Completion of the reported backend areas was not independently verified in this portfolio workspace.',
+      },
+    },
   },
   {
     slug: 'project-two',
     caseNumber: 'CASE-003',
-    caseStatus: 'Awaiting records',
-    title: 'E-Commerce Project',
+    caseStatus: 'Documented',
+    title: 'E-Commerce Platform',
     image: '/reference/ecom.png',
-    description: null,
-    technologies: null,
+    description: 'A React frontend and REST API integration for product discovery, shopping carts, delivery information and order workflows.',
+    technologies: ['React', 'JavaScript', 'Redux', 'React Router', 'Axios', 'React Hook Form', 'Tailwind CSS'],
     demoUrl: 'https://e-commerce-ruddy-iota-99.vercel.app/',
     githubLinks: [],
+    caseStudy: {
+      displayTitle: 'E-Commerce Platform',
+      overview: 'A React frontend and REST API integration for product discovery, online shopping, cart management, delivery information and order workflows.',
+      features: [
+        'User registration and authentication',
+        'Product catalogue, details, filtering, sorting and pagination',
+        'Shopping cart and quantity management',
+        'Address and card information management',
+        'Multi-step checkout workflow',
+        'Order creation and order history',
+      ],
+      stack: {
+        frontend: ['React', 'JavaScript', 'Redux', 'React Router', 'Axios', 'React Hook Form', 'Tailwind CSS'],
+        backend: ['REST API integration'],
+        databaseDevOps: ['Not verified'],
+        external: [
+          { name: 'Token handling', note: 'Authentication tokens are handled by the frontend integration.' },
+          { name: 'Protected routes', note: 'Protected frontend routes are part of the recorded architecture.' },
+        ],
+      },
+      architecture: [
+        { title: 'Pages & UI', detail: 'React pages and reusable components' },
+        { title: 'State', detail: 'Redux store · auth and cart state' },
+        { title: 'API', detail: 'Axios client → external REST API' },
+      ],
+      challenges: [
+        { title: 'Centralized state', detail: 'Redux coordinates authentication, catalogue and cart state across pages.' },
+        { title: 'API boundary', detail: 'Axios centralizes communication with the external REST API and token handling.' },
+        { title: 'Checkout flow', detail: 'React Hook Form supports the multi-step delivery and checkout workflow.' },
+      ],
+      status: {
+        implemented: 'Frontend features and REST API integrations are recorded as implemented in the project source.',
+        caveats: 'Backend source code, database architecture, real payment gateway behavior and an admin panel were not verified.',
+      },
+    },
   },
 ]

@@ -5,18 +5,20 @@ const THREAD_PATHS = {
     'M 168 470 C 292 694, 510 884, 742 1006',
   ],
   detail: [
-    'M 235 185 C 470 72, 840 62, 1080 84',
-    'M 1080 84 C 1080 278, 980 344, 895 492',
-    'M 895 492 C 1080 418, 1240 420, 1420 520',
-    'M 235 185 C 130 410, 150 620, 238 805',
-    'M 238 805 C 390 720, 590 780, 810 860',
-    'M 810 860 C 1010 760, 1220 680, 1420 520',
-    'M 220 1230 C 430 1120, 700 1125, 980 1240',
-    'M 980 1240 C 850 1420, 660 1540, 454 1710',
-    'M 454 1710 C 740 1600, 1110 1610, 1400 1740',
-    'M 1400 1740 C 1300 1900, 1120 2020, 915 2140',
+    'M 256 185 C 470 80, 830 55, 1080 84',
+    'M 1080 84 C 1050 250, 950 370, 840 500',
+    'M 840 500 C 1010 425, 1210 430, 1380 520',
+    'M 256 185 C 300 460, 350 690, 410 890',
+    'M 410 890 C 650 770, 940 780, 1160 900',
+    'M 1160 900 C 1240 740, 1320 650, 1380 520',
+    'M 220 1230 C 450 1120, 760 1120, 1080 1240',
+    'M 1080 1240 C 900 1430, 670 1570, 454 1710',
+    'M 454 1710 C 730 1600, 1100 1600, 1400 1740',
+    'M 1400 1740 C 1270 1910, 1100 2040, 915 2140',
   ],
 }
+
+const OVERVIEW_PIN_POINTS = [[168, 470], [1112, 456], [742, 1006]]
 
 const DETAIL_MOBILE_PATHS = [
   'M 75 100 C 200 160, 280 250, 330 420',
@@ -28,6 +30,11 @@ const DETAIL_MOBILE_PATHS = [
   'M 105 2610 C 220 2760, 300 2890, 330 3080',
   'M 330 3080 C 230 3230, 190 3390, 90 3560',
   'M 90 3560 C 190 3710, 260 3870, 210 4020',
+]
+
+const DETAIL_PIN_POINTS = [
+  [256, 185], [1080, 84], [840, 500], [1380, 520], [410, 890],
+  [1160, 900], [220, 1230], [1080, 1240], [454, 1710], [1400, 1740], [915, 2140],
 ]
 
 /**
@@ -57,6 +64,9 @@ export default function InvestigationThreads({ variant = 'overview', className =
             <path className="evidence-thread evidence-thread--cord" d={d} />
             <path className="evidence-thread evidence-thread--twist" d={d} />
           </g>)}
+          <g className="evidence-thread__pins">
+            {DETAIL_PIN_POINTS.map(([cx, cy]) => <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="7" />)}
+          </g>
         </svg>
         <svg
           className={`evidence-threads evidence-threads--detail evidence-threads--detail-mobile ${className}`.trim()}
@@ -83,6 +93,14 @@ export default function InvestigationThreads({ variant = 'overview', className =
       aria-hidden="true"
       focusable="false"
     >
+      <defs>
+        <radialGradient id="overview-brass-pin" cx="32%" cy="24%" r="78%">
+          <stop offset="0" stopColor="#f8e6ad" />
+          <stop offset=".32" stopColor="#c5a462" />
+          <stop offset=".68" stopColor="#80602f" />
+          <stop offset="1" stopColor="#3c2a17" />
+        </radialGradient>
+      </defs>
       {paths.map((d) => (
         <g key={d}>
           <path className="evidence-thread evidence-thread--shadow" d={d} />
@@ -90,6 +108,9 @@ export default function InvestigationThreads({ variant = 'overview', className =
           <path className="evidence-thread evidence-thread--twist" d={d} />
         </g>
       ))}
+      <g className="evidence-thread__pins" aria-hidden="true">
+        {OVERVIEW_PIN_POINTS.map(([cx, cy]) => <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="10" />)}
+      </g>
     </svg>
   )
 }

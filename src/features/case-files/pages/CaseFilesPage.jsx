@@ -1,5 +1,4 @@
 import { projects } from '../../../data/projects.js'
-import BoardMap from '../components/BoardMap.jsx'
 import CaseFileCard from '../components/CaseFileCard.jsx'
 import InvestigationThreads from '../components/InvestigationThreads.jsx'
 import './case-files.css'
@@ -21,7 +20,6 @@ export default function CaseFilesPage() {
             </span>
           </header>
 
-          <BoardMap />
           <InvestigationThreads variant="overview" />
 
           <section className="case-board__grid" aria-labelledby="case-files-title">

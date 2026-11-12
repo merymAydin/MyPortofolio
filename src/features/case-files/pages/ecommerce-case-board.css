@@ -1,0 +1,201 @@
+.case-detail-page--ecommerce .case-detail-board__backdrop {
+  background:
+    linear-gradient(120deg, rgba(29, 17, 11, .76), rgba(71, 42, 24, .5)),
+    url('/reference/london-newspaper-wall.png') center / cover;
+}
+
+.case-detail-page--ecommerce .case-detail-board__backdrop::before {
+  opacity: .2;
+}
+
+.ecommerce-case-layout {
+  position: relative;
+  width: min(100%, 98rem);
+  height: 79rem;
+  margin: 0 auto;
+}
+
+.ecommerce-case-layout > * { box-sizing: border-box; }
+
+.ecommerce-case-title {
+  z-index: 7;
+  top: .7rem;
+  left: 25%;
+  width: 49%;
+  min-height: 11.5rem;
+  --paper-rotation: -.7deg;
+}
+
+.ecommerce-case-title h1 { max-width: 17ch; }
+
+.ecommerce-interface {
+  z-index: 4;
+  top: 12.9rem;
+  left: 25.7%;
+  width: 48.6%;
+  min-height: 28rem;
+  --paper-rotation: .65deg;
+}
+
+.ecommerce-interface img {
+  width: 100%;
+  max-height: 25rem;
+  object-fit: contain;
+}
+
+.ecommerce-overview {
+  z-index: 6;
+  top: 3.7rem;
+  left: .7%;
+  width: 27.8%;
+  --paper-rotation: -1.15deg;
+}
+
+.ecommerce-features {
+  z-index: 6;
+  top: 31.5rem;
+  left: .3%;
+  width: 31%;
+  --paper-rotation: .8deg;
+}
+
+.ecommerce-stack {
+  z-index: 8;
+  top: 2.8rem;
+  left: 75%;
+  width: 24.1%;
+  padding: .95rem 1.05rem 1rem;
+  --paper-rotation: 1.1deg;
+}
+
+.ecommerce-stack .dossier-paper__heading {
+  margin-bottom: .45rem;
+  font-size: clamp(1.15rem, 1.45vw, 1.42rem);
+}
+
+.ecommerce-stack .stack-groups {
+  gap: .28rem;
+}
+
+.ecommerce-stack .stack-group {
+  padding-bottom: .25rem;
+}
+
+.ecommerce-stack .stack-group h3 {
+  margin-bottom: .18rem;
+  color: #594632;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.ecommerce-stack .stack-tags {
+  gap: .2rem .24rem;
+}
+
+.ecommerce-stack .stack-tags li {
+  padding: .12rem .3rem .1rem;
+  font-size: .78rem;
+  line-height: 1.05;
+}
+
+.ecommerce-stack .service-list {
+  gap: .25rem;
+}
+
+.ecommerce-stack .service-list li {
+  padding-left: .48rem;
+}
+
+.ecommerce-stack .service-list strong {
+  font-size: .8rem;
+  line-height: 1.05;
+}
+
+.ecommerce-stack .service-list span {
+  margin-top: .06rem;
+  font-size: .74rem;
+  line-height: 1.15;
+}
+
+.ecommerce-architecture {
+  z-index: 6;
+  top: 30.4rem;
+  left: 74.1%;
+  width: 25.3%;
+  --paper-rotation: -1deg;
+}
+
+.ecommerce-architecture .architecture-sketch { min-height: 12.5rem; }
+
+.ecommerce-evidence {
+  z-index: 7;
+  top: 54.2rem;
+  left: 5.2%;
+  width: 27%;
+  --paper-rotation: -1.4deg;
+}
+
+.ecommerce-highlights {
+  z-index: 8;
+  top: 52rem;
+  left: 35.7%;
+  width: 32.5%;
+  --paper-rotation: .9deg;
+}
+
+.ecommerce-status {
+  z-index: 8;
+  top: 54.5rem;
+  left: 70.3%;
+  width: 28%;
+  --paper-rotation: -1.2deg;
+}
+
+.case-detail-page--ecommerce .investigation-threads { z-index: 2; }
+
+@media (max-width: 82rem) {
+  .ecommerce-case-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+    width: min(100%, 46rem);
+    height: auto;
+  }
+
+  .ecommerce-case-layout > :not(.investigation-threads) {
+    position: relative;
+    inset: auto;
+    align-self: stretch;
+    width: auto;
+    max-width: none;
+    min-height: 0;
+    margin: 0 .2rem;
+  }
+
+  .ecommerce-case-layout .investigation-threads { display: none; }
+  .ecommerce-case-title { order: 0; }
+  .ecommerce-interface { order: 1; align-self: flex-end !important; width: 94% !important; }
+  .ecommerce-overview { order: 2; align-self: flex-start !important; width: 84% !important; }
+  .ecommerce-features { order: 3; align-self: flex-end !important; width: 94% !important; }
+  .ecommerce-stack { order: 4; align-self: flex-start !important; width: 88% !important; }
+  .ecommerce-architecture { order: 5; align-self: flex-end !important; width: 94% !important; }
+  .ecommerce-evidence { order: 6; align-self: flex-start !important; width: 86% !important; }
+  .ecommerce-highlights { order: 7; align-self: flex-end !important; width: 94% !important; }
+  .ecommerce-status { order: 8; align-self: flex-start !important; width: 88% !important; }
+}
+
+@media (max-width: 48rem) {
+  .ecommerce-case-layout > :not(.investigation-threads) {
+    max-width: calc(100vw - 2.2rem);
+    overflow-wrap: anywhere;
+  }
+
+  .ecommerce-interface img { max-height: none; }
+  .ecommerce-status,
+  .ecommerce-highlights,
+  .ecommerce-architecture { width: 96% !important; }
+}
