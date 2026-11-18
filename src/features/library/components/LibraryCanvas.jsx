@@ -1,4 +1,4 @@
-﻿import { Suspense, useState } from 'react'
+﻿import { Suspense, useEffect, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import * as THREE from 'three'
 import LibraryScene from './LibraryScene.jsx'
@@ -26,6 +26,16 @@ function supportsWebGL() {
  */
 export default function LibraryCanvas({ onJournalOpen, isJournalOpening }) {
   const [webglAvailable] = useState(supportsWebGL)
+  const [isCompactViewport, setIsCompactViewport] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 48rem)').matches,
+  )
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 48rem)')
+    const updateViewport = () => setIsCompactViewport(media.matches)
+    media.addEventListener('change', updateViewport)
+    return () => media.removeEventListener('change', updateViewport)
+  }, [])
 
   if (!webglAvailable) {
     return <SceneFallback status="unsupported" />
@@ -40,17 +50,17 @@ export default function LibraryCanvas({ onJournalOpen, isJournalOpening }) {
       >
         <Canvas
           camera={{ fov: 40, near: 0.1, far: 60, position: [0, 2.55, 7.6] }}
-          dpr={[1, 1.75]}
+          dpr={isCompactViewport ? [1, 1.25] : [1, 1.5]}
           frameloop="demand"
           gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
-          shadows="percentage"
+          shadows={!isCompactViewport}
           onCreated={({ gl }) => {
             gl.toneMapping = THREE.ACESFilmicToneMapping
             gl.toneMappingExposure = 1.05
           }}
         >
           <Suspense fallback={null}>
-            <LibraryScene onJournalOpen={onJournalOpen} isJournalOpening={isJournalOpening} />
+            <LibraryScene onJournalOpen={onJournalOpen} isJournalOpening={isJournalOpening} isCompactViewport={isCompactViewport} />
           </Suspense>
         </Canvas>
       </div>

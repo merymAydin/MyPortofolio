@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import * as THREE from 'three'
 
-function DeskSpotlight() {
+function DeskSpotlight({ isCompactViewport }) {
   const target = useMemo(() => new THREE.Object3D(), [])
 
   return (
@@ -16,8 +16,8 @@ function DeskSpotlight() {
         distance={12}
         decay={2}
         color="#ffe1b0"
-        castShadow
-        shadow-mapSize={[1024, 1024]}
+        castShadow={!isCompactViewport}
+        shadow-mapSize={isCompactViewport ? [512, 512] : [1024, 1024]}
         shadow-bias={-0.0004}
         shadow-normalBias={0.02}
       />
@@ -29,13 +29,13 @@ function DeskSpotlight() {
  * Lighting blockout: warm practical lights, one cool window rim and
  * a single shadow-casting lamp to keep the static scene inexpensive.
  */
-export default function SceneLighting() {
+export default function SceneLighting({ isCompactViewport = false }) {
   return (
     <>
       <ambientLight intensity={0.32} color="#c8b08a" />
       <hemisphereLight args={['#3b4656', '#171714', 0.45]} />
 
-      <DeskSpotlight />
+      <DeskSpotlight isCompactViewport={isCompactViewport} />
 
       {/* Soft front wash to keep the desk and shelves legible */}
       <directionalLight
