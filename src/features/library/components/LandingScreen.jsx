@@ -43,7 +43,7 @@ export default function LandingScreen() {
   const [cover, setCover] = useState(null)
   const [isJournalOpen, setIsJournalOpen] = useState(false)
   const [isTypewriterForeground, setIsTypewriterForeground] = useState(false)
-  const [soundEnabled, setSoundEnabled] = useState(true)
+  const [soundEnabled, setSoundEnabled] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
 
   const measureCover = useCallback(() => {

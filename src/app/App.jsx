@@ -1,5 +1,6 @@
 import { BrowserRouter } from 'react-router-dom'
 import AppRoutes from './routes.jsx'
+import ArchiveMusic from '../components/audio/ArchiveMusic.jsx'
 
 /**
  * Application root. Owns the router provider so that routing concerns
@@ -8,6 +9,7 @@ import AppRoutes from './routes.jsx'
 export default function App() {
   return (
     <BrowserRouter>
+      <ArchiveMusic />
       <AppRoutes />
     </BrowserRouter>
   )
