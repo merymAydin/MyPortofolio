@@ -7,6 +7,7 @@ const BIOGRAPHY = 'I am an aspiring full-stack developer with a growth mindset t
 export default function AuthorPage() {
   const [revealLens, setRevealLens] = useState(null)
   const biographyRef = useRef(null)
+  const recordRef = useRef(null)
   const handleLensMove = useCallback(({ x, y, radius, hasInspected }) => {
     if (!hasInspected) {
       setRevealLens(null)
@@ -29,12 +30,12 @@ export default function AuthorPage() {
   return (
     <article className="author-page" aria-labelledby="author-title">
       <div className="author-frame">
-        <section className="author-record">
+        <section ref={recordRef} className="author-record">
           <span className="brass-pin brass-pin--top" aria-hidden="true" />
           <div className="author-record__portrait-column">
             <p className="author-record__eyebrow">Archive I · Personal Record</p>
             <div className="author-record__portrait-frame">
-              <PortraitMagnifier onLensMove={handleLensMove} />
+              <PortraitMagnifier onLensMove={handleLensMove} surfaceRef={recordRef} />
             </div>
             <p className="author-record__magnifier-hint">Drag the glass across the record to reveal the hidden ink.</p>
             <p className="author-record__caption">Portrait plate · filed in the private archive</p>

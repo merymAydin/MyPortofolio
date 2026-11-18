@@ -80,7 +80,7 @@
 
 .author-record__portrait-column {
   position: relative;
-  z-index: 2;
+  z-index: 4;
   display: grid;
   justify-items: center;
   gap: var(--space-3);
@@ -254,7 +254,7 @@
 
 .portrait-magnifier__handle {
   position: absolute;
-  z-index: 2;
+  z-index: 6;
   padding: 0;
   border: 0;
   background: transparent;

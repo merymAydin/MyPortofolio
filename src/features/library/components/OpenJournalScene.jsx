@@ -393,6 +393,21 @@ export default function OpenJournalScene({
     ...vialStyle,
     transform: `rotate(${vialAngle}deg)`,
   }
+  const openVialHintStyle = cover && sceneBounds
+    ? (() => {
+      const scale = cover.scale
+      const width = Math.min(Math.max(236 * scale, 140), Math.max(140, sceneBounds.width - 32))
+      const height = Math.max(32, 38 * scale)
+      const arrowTop = cover.top + (vialNeck.y - 49) * scale
+      const left = cover.left + vialNeck.x * scale - width / 2
+      return {
+        left: Math.min(Math.max(16, left), Math.max(16, sceneBounds.width - width - 16)),
+        top: Math.max(12, arrowTop - height - 10),
+        width,
+        height,
+      }
+    })()
+    : positionOnScene([vialNeck.x - 118, vialNeck.y - 92, 236, 38])
   const pageHover = (event) => {
     const lens = inspectionCanvasRef.current
     const ctx = lens?.getContext('2d')
@@ -577,7 +592,7 @@ export default function OpenJournalScene({
       <div className="open-journal-scene__vial-guidance" aria-live="polite">
         <span
           className={`open-journal-scene__hint open-journal-scene__hint--open${corkOpened ? ' is-dismissed' : ''}`}
-          style={positionOnScene([vialNeck.x - 118, vialNeck.y - 92, 236, 38])}
+          style={openVialHintStyle}
           aria-hidden={corkOpened}
         >
           Open the vial

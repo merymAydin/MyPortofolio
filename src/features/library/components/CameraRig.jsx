@@ -20,17 +20,17 @@ export default function CameraRig() {
 
     if (aspect < 0.62) {
       return {
-        fov: 64,
-        position: [0, 2.95, 9.8],
-        target: [0.85, 1.15, 1.7],
+        fov: 58,
+        position: [0, 2.75, 7.8],
+        target: [0.55, 1.25, 1.75],
       }
     }
 
     if (aspect < 0.9) {
       return {
-        fov: 62,
-        position: [0, 2.95, 9.7],
-        target: [-0.1, 1.12, 1.6],
+        fov: 56,
+        position: [0, 2.8, 8.0],
+        target: [-0.05, 1.2, 1.65],
       }
     }
 
