@@ -6,7 +6,7 @@
   --case-paper-light: #eee0c2;
   --case-paper-dark: #c7a87a;
 
-  min-height: 100svh;
+  min-height: calc(100svh - 8rem);
   overflow-x: clip;
   background: #765b3d;
   color: #2c2118;
@@ -16,7 +16,7 @@
 .case-detail-board {
   position: relative;
   isolation: isolate;
-  min-height: 100svh;
+  min-height: calc(100svh - 8rem);
 }
 
 .case-detail-board__backdrop {

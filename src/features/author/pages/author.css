@@ -1,0 +1,346 @@
+.app-shell:has(.author-page) {
+  overflow-x: clip;
+}
+
+.author-page {
+  position: relative;
+  width: 100%;
+  min-height: calc(100svh - 8rem);
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 1.25rem);
+  overflow: visible;
+}
+
+.author-page::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-block: 1px solid rgba(180, 154, 107, 0.34);
+  background:
+    linear-gradient(135deg, rgba(23, 17, 12, 0.54), rgba(48, 37, 29, 0.22) 48%, rgba(23, 17, 12, 0.62)),
+    url('/reference/laboratory-mahogany-desk.png') center / cover no-repeat,
+    var(--color-dark-wood);
+  box-shadow: inset 0 0 55px rgba(0, 0, 0, 0.42);
+  content: '';
+  pointer-events: none;
+}
+
+.author-frame {
+  position: relative;
+  z-index: 1;
+  width: min(95.5vw, 115rem);
+  padding: 14px;
+  border: 1px solid rgba(180, 154, 107, 0.68);
+  background:
+    linear-gradient(145deg, rgba(20, 14, 10, 0.78), rgba(105, 75, 47, 0.64) 45%, rgba(25, 17, 12, 0.86)),
+    url('/reference/laboratory-mahogany-desk.png') center / cover no-repeat;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.52), inset 0 0 0 3px rgba(25, 18, 13, 0.75), inset 0 1px 0 rgba(232, 201, 140, 0.35);
+}
+
+.author-record {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.8fr);
+  align-items: center;
+  width: 100%;
+  min-height: clamp(36rem, 73svh, 50rem);
+  padding: clamp(1.5rem, 3vw, 3.5rem);
+  border: 1px solid rgba(48, 37, 29, 0.48);
+  background:
+    linear-gradient(rgba(217, 204, 173, 0.88), rgba(217, 204, 173, 0.92)),
+    repeating-linear-gradient(0deg, rgba(48, 37, 29, 0.035) 0 1px, transparent 1px 5px);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.48), inset 0 0 0 1px rgba(180, 154, 107, 0.45);
+  color: var(--color-ink);
+  transform: rotate(-0.2deg);
+}
+
+.author-record::before,
+.author-record::after {
+  position: absolute;
+  width: 10rem;
+  height: 1.5rem;
+  background: rgba(180, 154, 107, 0.26);
+  box-shadow: 0 2px 5px rgba(48, 37, 29, 0.16);
+  content: '';
+}
+
+.author-record::before {
+  top: -0.75rem;
+  left: 18%;
+  transform: rotate(-4deg);
+}
+
+.author-record::after {
+  right: 12%;
+  bottom: -0.65rem;
+  transform: rotate(3deg);
+}
+
+.author-record__portrait-column {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding-right: clamp(1rem, 4vw, 3rem);
+}
+
+.author-record__eyebrow,
+.author-record__index,
+.author-record__caption {
+  color: var(--color-leather-brown);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.author-record__eyebrow {
+  margin: 0;
+}
+
+.author-record__index {
+  margin: 0;
+  justify-self: end;
+}
+
+.author-record__caption {
+  margin: 0;
+  font-size: 0.67rem;
+  text-align: center;
+}
+
+.author-record__magnifier-hint {
+  max-width: 22ch;
+  margin: 0;
+  color: var(--color-leather-brown);
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-style: italic;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.author-record__portrait-frame {
+  position: relative;
+  width: min(100%, clamp(14rem, 18vw, 18rem));
+  padding: 0.65rem;
+  border: 1px solid rgba(180, 154, 107, 0.9);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #d5bd80, #765a3b 48%, #b49a6b);
+  box-shadow: 0 10px 18px rgba(48, 37, 29, 0.38), inset 0 0 0 2px rgba(48, 37, 29, 0.58);
+}
+
+.author-record__portrait-frame::after {
+  position: absolute;
+  inset: 0.38rem;
+  border: 1px solid rgba(48, 37, 29, 0.64);
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+}
+
+.author-record__portrait-column .portrait-magnifier {
+  width: 100%;
+  aspect-ratio: 879 / 1134;
+}
+
+.author-record__portrait-column .portrait-magnifier__portrait {
+  clip-path: ellipse(38.5% 41% at 50% 50%);
+}
+
+.author-record__copy {
+  position: relative;
+  z-index: 3;
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3.5rem);
+  border-left: 1px solid rgba(118, 90, 59, 0.5);
+}
+
+.author-record__copy h1 {
+  margin-bottom: var(--space-2);
+  color: var(--color-charcoal);
+  font-size: clamp(2.1rem, 4vw, 4rem);
+  letter-spacing: 0.02em;
+}
+
+.author-record__subtitle {
+  margin-bottom: var(--space-6);
+  color: var(--color-leather-brown);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.author-record__copy blockquote {
+  position: relative;
+  max-width: 62ch;
+  margin: 0;
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--color-leather-brown);
+  color: var(--color-ink);
+  font-size: clamp(1.25rem, 1.5vw, 1.65rem);
+  line-height: 1.55;
+}
+
+.author-record__ink-source,
+.author-record__ink-reveal {
+  display: block;
+}
+
+.author-record__ink-source {
+  color: transparent;
+  user-select: none;
+}
+
+.author-record__ink-reveal {
+  position: absolute;
+  inset: 0;
+  color: var(--color-ink);
+  pointer-events: none;
+  clip-path: circle(var(--reveal-radius) at var(--reveal-x) var(--reveal-y));
+}
+
+.author-record__note {
+  margin-top: var(--space-6);
+  color: var(--color-leather-brown);
+  font-family: var(--font-mono);
+  font-size: 0.69rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.brass-pin {
+  position: absolute;
+  z-index: 4;
+  width: 1rem;
+  aspect-ratio: 1;
+  border: 1px solid rgba(48, 37, 29, 0.7);
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 25%, #f0d791 0 10%, #b49a6b 28%, #765a3b 72%, #30251d 100%);
+  box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.5);
+}
+
+.author-record > .brass-pin--top {
+  top: -0.55rem;
+  right: 18%;
+}
+
+.portrait-magnifier {
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.portrait-magnifier__portrait,
+.portrait-magnifier__lens {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.portrait-magnifier__portrait {
+  z-index: 0;
+}
+
+.portrait-magnifier__lens {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.portrait-magnifier__handle {
+  position: absolute;
+  z-index: 2;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.45));
+}
+
+.portrait-magnifier__handle:active {
+  cursor: grabbing;
+}
+
+.portrait-magnifier__handle:focus-visible {
+  outline: 2px solid var(--color-antique-gold);
+  outline-offset: 3px;
+}
+
+.portrait-magnifier__handle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+@media (max-width: 60rem) {
+  .author-record {
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.45fr);
+    padding: clamp(1.5rem, 3.5vw, 2.75rem);
+  }
+
+  .author-record__portrait-frame {
+    width: min(100%, 14rem);
+  }
+
+  .author-record__copy {
+    padding-right: clamp(1rem, 3vw, 2rem);
+    padding-left: clamp(1rem, 3vw, 2rem);
+  }
+}
+
+@media (max-width: 48rem) {
+  .author-page {
+    min-height: calc(100svh - 8rem);
+    margin: 0;
+    padding: 0;
+  }
+
+  .author-frame {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .author-record {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+    min-height: auto;
+    padding: clamp(1.25rem, 6vw, 2.5rem);
+    transform: none;
+  }
+
+  .author-record__portrait-column {
+    padding-right: 0;
+  }
+
+  .author-record__portrait-frame {
+    width: min(100%, 12.5rem);
+  }
+
+  .author-record__copy {
+    padding: var(--space-5) 0 0;
+    border-top: 1px solid rgba(118, 90, 59, 0.5);
+    border-left: 0;
+  }
+
+  .author-record__index {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 32rem) {
+  .author-record__copy h1 {
+    font-size: clamp(1.9rem, 10vw, 2.6rem);
+  }
+
+  .author-record__copy blockquote {
+    font-size: 1.25rem;
+  }
+}

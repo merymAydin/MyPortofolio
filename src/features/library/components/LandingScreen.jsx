@@ -33,22 +33,6 @@ function FullscreenIcon() {
   )
 }
 
-function JournalFrame() {
-  return (
-    <svg
-      className="landing-screen__open-frame"
-      viewBox="0 0 236 66"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path d="M14 1H222l13 13v38l-13 13H14L1 52V14z" />
-      <path d="M20 5H216l9 9v34l-9 9H20l-9-9V14z" />
-      <path d="m118 1 5 5-5 5-5-5zM118 55l5 5-5 5-5-5z" />
-    </svg>
-  )
-}
-
 /**
  * The supplied image provides the exact study composition. The title and
  * controls are live HTML elements layered over the scene.
@@ -109,6 +93,15 @@ export default function LandingScreen() {
       height: height * cover.scale,
     }
   }
+
+  const openJournalCoverStyle = cover
+    ? {
+      ...positionOnScene([702, 808, 276, 86]),
+      backgroundImage: "url('/reference/laboratory-mahogany-desk.png')",
+      backgroundSize: `${1536 * 0.6 * cover.scale}px ${1024 * 0.6 * cover.scale}px`,
+      backgroundPosition: `${-500 * 0.6 * cover.scale}px ${-430 * 0.6 * cover.scale}px`,
+    }
+    : undefined
 
   const openJournal = () => {
     if (isJournalOpen) return
@@ -179,15 +172,15 @@ export default function LandingScreen() {
         style={positionOnScene([1544, 18, 104, 58])}
         aria-hidden="true"
       />
-      <div
-        className="landing-screen__scene-cover landing-screen__scene-cover--open"
-        style={positionOnScene([702, 808, 276, 86])}
-        aria-hidden="true"
-      />
-
       <InteractiveTypewriter
         positionOnScene={positionOnScene}
         onForegroundChange={setIsTypewriterForeground}
+      />
+
+      <div
+        className="landing-screen__scene-cover landing-screen__scene-cover--open"
+        style={openJournalCoverStyle}
+        aria-hidden="true"
       />
 
       <h1 className="landing-screen__mobile-title">
@@ -222,20 +215,16 @@ export default function LandingScreen() {
         type="button"
         className="landing-screen__hotspot landing-screen__journal"
         style={positionOnScene([644, 488, 450, 310])}
-        aria-label="Open the closed journal"
+        aria-label="Open the journal"
         onClick={openJournal}
       />
-
-      <button
-        type="button"
-        className="landing-screen__hotspot landing-screen__open"
-        style={positionOnScene([722, 820, 236, 66])}
-        aria-label="Open the Journal"
-        onClick={openJournal}
+      <span
+        className="landing-screen__journal-hint"
+        style={positionOnScene([722, 830, 236, 38])}
+        aria-hidden="true"
       >
-        <span>Open the Journal</span>
-        <JournalFrame />
-      </button>
+        Click to open
+      </span>
         </>
       )}
     </div>

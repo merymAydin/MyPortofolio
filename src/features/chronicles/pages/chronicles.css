@@ -1,0 +1,574 @@
+.app-shell:has(.chronicles-page) {
+  overflow-x: clip;
+}
+
+.chronicles-page {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: calc(100svh - 8rem);
+  margin: 0;
+  padding: clamp(3.75rem, 7vh, 5.5rem) max(var(--gutter), calc((100vw - 82rem) / 2)) clamp(3rem, 5vw, 4.5rem);
+  overflow: hidden;
+  background-image:
+    linear-gradient(180deg, rgba(24, 13, 8, 0.3), rgba(31, 16, 8, 0.12) 34%, rgba(24, 13, 8, 0.25)),
+    url('/reference/laboratory-mahogany-desk.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--color-ink);
+}
+
+.chronicles-page::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 10%, rgba(224, 166, 86, 0.17), transparent 42%);
+  content: '';
+  pointer-events: none;
+}
+
+.chronicles-heading {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto clamp(1.7rem, 3.5vh, 2.8rem);
+  color: var(--color-parchment);
+  text-align: center;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.8));
+}
+
+.chronicles-heading__label {
+  margin: 0 0 0.65rem;
+  color: #d2ad6a;
+  font-family: var(--font-mono);
+  font-size: clamp(0.62rem, 0.95vw, 0.8rem);
+  letter-spacing: 0.31em;
+}
+
+.chronicles-heading h1 {
+  margin: 0;
+  color: #d5b579;
+  font-family: var(--font-body);
+  font-size: clamp(3.2rem, 7vw, 6.15rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.04;
+  text-shadow: 0 2px 0 rgba(34, 20, 10, 0.82), 0 6px 14px rgba(0, 0, 0, 0.65);
+}
+
+.chronicles-heading__rule {
+  position: relative;
+  width: min(27rem, 74vw);
+  height: 1px;
+  margin: 0.85rem auto 0.7rem;
+  background: linear-gradient(90deg, transparent, #b99a5e 15% 47%, #ddbd78 50%, #b99a5e 53% 85%, transparent);
+}
+
+.chronicles-heading__rule::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.52rem;
+  height: 0.52rem;
+  border: 1px solid #c6a566;
+  background: #3b2514;
+  content: '';
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.chronicles-heading__subtitle {
+  margin: 0;
+  color: #d8bb7b;
+  font-family: var(--font-heading);
+  font-size: clamp(0.8rem, 1.25vw, 1.05rem);
+  letter-spacing: 0.34em;
+}
+
+.chronicles-records {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.8fr) minmax(0, 1.8fr);
+  align-items: start;
+  gap: clamp(0.85rem, 1.6vw, 1.5rem);
+  width: min(100%, 82rem);
+  margin: 0 auto;
+}
+
+.chronicle-document {
+  --doc-pad-x: clamp(1.2rem, 2.3vw, 2rem);
+  position: relative;
+  min-width: 0;
+  isolation: isolate;
+  padding: 1.65rem var(--doc-pad-x) 1.8rem;
+  border: 1px solid rgba(68, 41, 21, 0.35);
+  background-color: #c99c60;
+  background-image:
+    radial-gradient(ellipse at 8% 7%, rgba(255, 225, 171, 0.28), transparent 34%),
+    linear-gradient(135deg, rgba(229, 194, 133, 0.2), rgba(94, 56, 28, 0.1)),
+    url('/reference/laboratory-aged-parchment.png');
+  background-position: center;
+  background-size: auto, auto, cover;
+  background-repeat: no-repeat;
+  color: #26190f;
+  filter: drop-shadow(2px 3px 0 rgba(94, 59, 31, 0.76)) drop-shadow(0 1rem 0.8rem rgba(0, 0, 0, 0.62));
+}
+
+.chronicle-document--education {
+  min-height: 35rem;
+  clip-path: polygon(1% 1.8%, 8% 0.8%, 18% 1.5%, 28% 0.6%, 40% 1.6%, 51% 0.7%, 63% 1.7%, 75% 0.6%, 88% 1.4%, 98% 0.8%, 99.4% 7%, 98.4% 19%, 99.6% 34%, 98.5% 49%, 99.3% 66%, 98.4% 82%, 99% 94%, 96% 99%, 85% 97.7%, 72% 99%, 59% 97.7%, 47% 99.4%, 34% 97.8%, 21% 99%, 8% 97.5%, 1.6% 99%, 0.4% 93%, 1.4% 78%, 0.3% 62%, 1.2% 46%, 0.4% 29%, 1.4% 14%);
+  transform: rotate(-0.65deg) translateY(0.45rem);
+}
+
+.chronicle-document--experience {
+  min-height: 36rem;
+  padding-top: 1.85rem;
+  clip-path: polygon(1.6% 1.1%, 10% 1.8%, 19% 0.7%, 29% 1.7%, 39% 0.8%, 51% 1.9%, 62% 0.7%, 74% 1.7%, 86% 0.8%, 97.6% 1.5%, 99.5% 5%, 98.5% 17%, 99.5% 31%, 98.5% 45%, 99.5% 61%, 98.4% 77%, 99.2% 92%, 96.5% 98.8%, 86% 97.4%, 75% 99%, 63% 97.5%, 52% 99%, 39% 97.6%, 28% 99.2%, 16% 97.6%, 4% 98.8%, 0.5% 94%, 1.3% 79%, 0.3% 64%, 1.2% 48%, 0.3% 32%, 1.3% 16%);
+  transform: rotate(0.35deg) translateY(0.9rem);
+}
+
+.chronicle-document__wear {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 4% 21%, rgba(75, 43, 22, 0.2), transparent 17%),
+    radial-gradient(ellipse at 92% 88%, rgba(81, 45, 23, 0.18), transparent 18%),
+    radial-gradient(ellipse at 37% 85%, rgba(255, 227, 172, 0.2), transparent 22%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+  background-size: auto, auto, auto, 180px 180px;
+  mix-blend-mode: multiply;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.chronicle-document__frame {
+  position: absolute;
+  z-index: 0;
+  inset: 0.75rem;
+  border: 1px solid rgba(72, 43, 22, 0.56);
+  outline: 1px solid rgba(112, 73, 38, 0.22);
+  outline-offset: 0.22rem;
+  pointer-events: none;
+}
+
+.chronicle-document__frame::before,
+.chronicle-document__frame::after {
+  position: absolute;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 1px solid rgba(72, 43, 22, 0.58);
+  content: '';
+}
+
+.chronicle-document__frame::before {
+  top: 0.25rem;
+  left: 0.25rem;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.chronicle-document__frame::after {
+  right: 0.25rem;
+  bottom: 0.25rem;
+  border-top: 0;
+  border-left: 0;
+}
+
+.chronicle-document__pin {
+  position: absolute;
+  z-index: 4;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid rgba(55, 33, 16, 0.8);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 24%, #f3d88e 0 9%, #c3a05d 25%, #8b612f 67%, #402614 100%);
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.66), inset 0 1px 1px rgba(255, 241, 190, 0.7);
+}
+
+.chronicle-document__pin--top {
+  top: 0.3rem;
+  right: 13%;
+}
+
+.chronicle-document__pin--lower {
+  right: 9%;
+  bottom: 0.45rem;
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.chronicle-document__heading {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  padding: 0.15rem 0.15rem 0.5rem;
+}
+
+.chronicle-document__heading > span {
+  flex: none;
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.chronicle-document__heading h2 {
+  margin: 0;
+  color: #26190f;
+  font-family: var(--font-heading);
+  font-size: clamp(1.08rem, 1.65vw, 1.45rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.chronicle-document__divider {
+  position: relative;
+  z-index: 1;
+  height: 1px;
+  margin-bottom: 1.15rem;
+  background: linear-gradient(90deg, transparent, rgba(72, 43, 22, 0.8) 10% 88%, transparent);
+}
+
+.chronicle-document__divider::after {
+  position: absolute;
+  top: -0.17rem;
+  left: 50%;
+  width: 0.36rem;
+  height: 0.36rem;
+  border: 1px solid rgba(72, 43, 22, 0.78);
+  background: #c5965a;
+  content: '';
+  transform: rotate(45deg);
+}
+
+.education-record,
+.experience-record {
+  position: relative;
+  z-index: 1;
+}
+
+.education-record {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.education-record__engraving {
+  width: min(100%, 15rem);
+  margin: 0.15rem auto 0.45rem;
+}
+
+.education-record__engraving img {
+  mix-blend-mode: multiply;
+  opacity: 0.78;
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  mask-composite: intersect;
+}
+
+.education-record__engraving img,
+.experience-record__engraving img,
+.experience-record__kart-engraving img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.education-record h3 {
+  max-width: 18ch;
+  margin: 0.25rem 0 0.65rem;
+  color: #24180f;
+  font-family: var(--font-body);
+  font-size: clamp(1.45rem, 2vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1.08;
+}
+
+.education-record__ornament,
+.experience-record__ornament {
+  position: relative;
+  width: 58%;
+  height: 1px;
+  margin: 0.4rem auto 0.85rem;
+  background: linear-gradient(90deg, transparent, rgba(83, 50, 27, 0.72), transparent);
+}
+
+.education-record__ornament span,
+.experience-record__ornament span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid rgba(83, 50, 27, 0.75);
+  background: #c99d61;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.education-record__degree {
+  margin: 0.2rem 0 0.85rem;
+  color: #332116;
+  font-size: clamp(1.25rem, 1.75vw, 1.55rem);
+  font-style: italic;
+  line-height: 1.28;
+}
+
+.education-record__language {
+  margin: 0 0 1rem;
+  padding: 0.25rem 1.2rem;
+  border: 1px solid rgba(86, 52, 28, 0.66);
+  color: #2a1b10;
+  font-size: 1.1rem;
+  font-style: italic;
+  clip-path: polygon(0.5rem 0, calc(100% - 0.5rem) 0, 100% 50%, calc(100% - 0.5rem) 100%, 0.5rem 100%, 0 50%);
+}
+
+.education-record__dates {
+  margin: 0.45rem 0 0;
+  color: #2e1e12;
+  font-size: clamp(1.35rem, 1.9vw, 1.7rem);
+  font-style: italic;
+}
+
+.experience-record__identity {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 0.75fr);
+  align-items: center;
+  gap: clamp(0.6rem, 1.6vw, 1.4rem);
+  padding: 0.15rem 0.45rem 0.25rem;
+}
+
+.experience-record__company h3 {
+  max-width: 34ch;
+  margin: 0 0 0.45rem;
+  color: #24180f;
+  font-family: var(--font-body);
+  font-size: clamp(1.45rem, 2.05vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.experience-record__location {
+  margin: 0;
+  color: #3b2818;
+  font-size: clamp(1.08rem, 1.5vw, 1.28rem);
+  font-style: italic;
+}
+
+.experience-record__location span {
+  display: inline-block;
+  margin-right: 0.35rem;
+  color: #5b3b20;
+  font-style: normal;
+}
+
+.experience-record__engraving {
+  width: min(100%, 13.5rem);
+  justify-self: end;
+  margin: 0;
+}
+
+.experience-record__engraving img {
+  /* The supplied engraving includes clipped heading fragments at its left edge. */
+  clip-path: polygon(32% 0, 100% 0, 100% 100%, 0 100%, 0 53%, 32% 53%);
+  mix-blend-mode: multiply;
+  opacity: 0.82;
+  mask-image: linear-gradient(to right, transparent, #000 14%, #000 88%, transparent), linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  mask-composite: intersect;
+}
+
+.experience-record__role {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0.8rem 0 0.35rem;
+  padding: 0.32rem 1.35rem;
+  border: 1px solid rgba(94, 57, 29, 0.65);
+  background: linear-gradient(110deg, rgba(201, 157, 96, 0.82), rgba(228, 195, 137, 0.9), rgba(193, 144, 82, 0.82));
+  color: #2a1a0f;
+  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+  font-style: italic;
+  line-height: 1.15;
+  clip-path: polygon(0.7rem 0, calc(100% - 0.7rem) 0, 100% 50%, calc(100% - 0.7rem) 100%, 0.7rem 100%, 0 50%);
+}
+
+.experience-record__dates {
+  margin: 0.15rem 0 0.25rem 1.2rem;
+  color: #322114;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-style: italic;
+}
+
+.experience-record__dates span {
+  margin-right: 0.45rem;
+  color: #664421;
+  font-style: normal;
+}
+
+.experience-record__ornament {
+  width: 74%;
+  margin: 0.9rem auto 1.05rem;
+}
+
+.experience-record__details {
+  display: grid;
+  gap: 0.72rem;
+  margin: 0;
+  padding: 0 0.35rem 0 1.35rem;
+  max-width: 72ch;
+  color: #24180f;
+  font-size: clamp(1.12rem, 1.65vw, 1.38rem);
+  font-weight: 600;
+  line-height: 1.34;
+  list-style: none;
+}
+
+.experience-record__details li {
+  position: relative;
+  margin: 0;
+}
+
+.experience-record__details li::before {
+  position: absolute;
+  top: 0.48em;
+  left: -1.1rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border: 1px solid rgba(77, 48, 25, 0.8);
+  background: #8c6036;
+  content: '';
+  transform: rotate(45deg);
+}
+
+.experience-record__evidence {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(8rem, 11rem);
+  align-items: center;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.experience-record__kart-engraving {
+  width: min(100%, 11rem);
+  margin: 0;
+  justify-self: end;
+}
+
+.experience-record__kart-engraving img {
+  /* Trace only the actual printed travel card; the surrounding source sheet
+     contains unrelated paragraph and image fragments. */
+  clip-path: polygon(7% 23%, 74% 8%, 79% 69%, 15% 89%);
+  mix-blend-mode: multiply;
+  opacity: 0.84;
+  mask-image: linear-gradient(to right, transparent, #000 2%, #000 98%, transparent), linear-gradient(to bottom, transparent, #000 2%, #000 98%, transparent);
+  mask-composite: intersect;
+}
+
+@media (max-width: 58rem) {
+  .chronicles-page {
+    padding-right: max(var(--gutter), 1.35rem);
+    padding-left: max(var(--gutter), 1.35rem);
+  }
+
+  .chronicles-records {
+    grid-template-columns: minmax(13rem, 0.78fr) minmax(0, 1.65fr);
+    gap: 0.9rem;
+  }
+
+  .chronicle-document {
+    --doc-pad-x: 1.15rem;
+    padding-top: 1.45rem;
+  }
+
+  .chronicle-document--education,
+  .chronicle-document--experience {
+    min-height: 34rem;
+  }
+
+  .experience-record__identity {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .experience-record__engraving {
+    width: min(100%, 13.5rem);
+    margin: 0.2rem 0 0 auto;
+  }
+
+  .experience-record__evidence {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .experience-record__kart-engraving {
+    width: min(100%, 10rem);
+  }
+}
+
+@media (max-width: 44rem) {
+  .chronicles-page {
+    width: 100%;
+    min-height: auto;
+    margin: 0;
+    padding-right: var(--gutter);
+    padding-left: var(--gutter);
+    padding-top: 3.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .chronicles-heading {
+    margin-bottom: 1.8rem;
+  }
+
+  .chronicles-heading__label {
+    letter-spacing: 0.17em;
+  }
+
+  .chronicles-heading h1 {
+    max-width: calc(100vw - 2rem);
+    margin-inline: auto;
+    font-size: clamp(2.4rem, 10.5vw, 3.6rem);
+  }
+
+  .chronicles-heading__subtitle {
+    font-size: 0.76rem;
+    letter-spacing: 0.18em;
+  }
+
+  .chronicles-records {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    width: min(100%, 36rem);
+  }
+
+  .chronicle-document,
+  .chronicle-document--education,
+  .chronicle-document--experience {
+    min-height: auto;
+    padding: 1.5rem clamp(1.15rem, 5vw, 1.8rem) 1.8rem;
+    transform: none;
+  }
+
+  .education-record__engraving {
+    width: min(75%, 15rem);
+  }
+
+  .experience-record__identity {
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: 0.15rem;
+  }
+
+  .experience-record__engraving {
+    width: min(100%, 13.5rem);
+    margin-left: auto;
+  }
+
+  .experience-record__details {
+    padding-right: 0;
+    font-size: 1.08rem;
+  }
+}

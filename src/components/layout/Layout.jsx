@@ -44,7 +44,7 @@ export default function Layout() {
         </nav>
       </header>
 
-      <main className="site-main" id="main-content" tabIndex="-1">
+      <main className="site-main site-main--archive" id="main-content" tabIndex="-1">
         <Outlet />
       </main>
 

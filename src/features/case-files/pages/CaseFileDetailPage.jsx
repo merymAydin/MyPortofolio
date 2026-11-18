@@ -555,7 +555,7 @@ export default function CaseFileDetailPage() {
   const isEcommerceCase = project?.caseNumber === 'CASE-003' || project?.slug === 'project-two'
 
   return (
-    <main className={`case-detail-page ${isTwitterCase ? 'case-detail-page--twitter' : ''}${isEcommerceCase ? ' case-detail-page--ecommerce' : ''}`}>
+    <div className={`case-detail-page ${isTwitterCase ? 'case-detail-page--twitter' : ''}${isEcommerceCase ? ' case-detail-page--ecommerce' : ''}`}>
       <div className="case-detail-board">
         <div className="case-detail-board__backdrop" aria-hidden="true" />
         <div className="case-detail-board__inner">
@@ -584,6 +584,6 @@ export default function CaseFileDetailPage() {
           )}
         </div>
       </div>
-    </main>
+    </div>
   )
 }

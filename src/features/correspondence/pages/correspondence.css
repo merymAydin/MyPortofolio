@@ -1,72 +1,283 @@
 .correspondence-page {
-  width: min(100%, 52rem);
-  max-height: calc(100dvh - 2rem);
-  overflow-y: auto;
+  position: relative;
+  min-height: calc(100svh - 8rem);
+  padding: clamp(2.25rem, 5vh, 4rem) var(--gutter) 2.5rem;
+  overflow: hidden;
+  background-image:
+    linear-gradient(180deg, rgba(25, 13, 7, 0.48), rgba(31, 17, 10, 0.14) 48%, rgba(20, 11, 7, 0.42)),
+    url('/reference/laboratory-mahogany-desk.png');
+  background-position: center;
+  background-size: cover;
+  color: var(--color-parchment);
 }
 
-.correspondence-form {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.55rem;
-  margin-top: 1.6rem;
+.correspondence-heading {
+  position: relative;
+  z-index: 2;
+  margin: 0 auto 0.9rem;
+  text-align: center;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-.correspondence-form label {
-  margin-top: 0.65rem;
-  color: var(--color-dark-wood);
-  font-family: var(--font-heading);
-  font-weight: 600;
+.correspondence-heading p {
+  margin: 0 0 0.45rem;
+  color: #d2ad6a;
+  font-family: var(--font-mono);
+  font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+  letter-spacing: 0.22em;
 }
 
-.correspondence-form input,
-.correspondence-form textarea {
+.correspondence-heading h1 {
+  margin: 0;
+  color: #d6b679;
+  font-family: var(--font-body);
+  font-size: clamp(2.1rem, 4.4vw, 3.75rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.correspondence-heading > span {
+  display: block;
+  margin-top: 0.4rem;
+  color: #d9c8a2;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.correspondence-typewriter {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 68rem);
+  margin: 0 auto;
+}
+
+.correspondence-typewriter__machine {
+  position: relative;
   width: 100%;
-  padding: 0.7rem 0.8rem;
-  border: 1px solid rgba(48, 37, 29, 0.48);
-  border-radius: 2px;
-  background: rgba(255, 249, 233, 0.48);
-  color: var(--color-charcoal);
+  aspect-ratio: 3 / 2;
+  container-type: inline-size;
+  isolation: isolate;
+  overflow: visible;
+  filter: drop-shadow(0 1rem 1.4rem rgba(0, 0, 0, 0.55));
+}
+
+.correspondence-typewriter__machine > img {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.correspondence-typewriter__paper {
+  position: absolute;
+  z-index: 2;
+  top: 2%;
+  left: 25%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  gap: 0.46cqw;
+  width: 50%;
+  height: 28%;
+  margin: 0;
+  padding: 1.1cqw 1.35cqw 0.7cqw;
+  color: #332316;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: clamp(0.78rem, 1.5cqw, 1rem);
+  line-height: 1.15;
+}
+
+.correspondence-typewriter__field {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: 3.7rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.45rem;
+  min-width: 0;
+  color: #4b3320;
+  font-size: 0.92em;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+.correspondence-typewriter__field > span {
+  white-space: nowrap;
+}
+
+.correspondence-typewriter__field input,
+.correspondence-typewriter__field textarea {
+  min-width: 0;
+  width: 100%;
+  padding: 0.05rem 0.1rem 0.16rem;
+  border: 0;
+  border-bottom: 1px dotted rgba(76, 50, 30, 0.52);
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: #291b11;
   font: inherit;
+  font-weight: 500;
+  letter-spacing: 0;
 }
 
-.correspondence-form textarea {
-  resize: vertical;
+.correspondence-typewriter__field textarea {
+  height: 2.35em;
+  resize: none;
+  line-height: 1.2;
 }
 
-.correspondence-form input:focus-visible,
-.correspondence-form textarea:focus-visible,
-.correspondence-form button:focus-visible {
-  outline: 2px solid var(--color-dark-wood);
+.correspondence-typewriter__field input:focus-visible,
+.correspondence-typewriter__field textarea:focus-visible {
+  border-bottom-color: #7c321f;
+  box-shadow: 0 1px 0 #7c321f;
+}
+
+.correspondence-typewriter__field--message {
+  grid-column: 1 / -1;
+  grid-template-columns: 3.7rem minmax(0, 1fr);
+}
+
+.correspondence-typewriter__send {
+  justify-self: end;
+  padding: 0.18em 0.7em;
+  border: 1px solid rgba(94, 42, 28, 0.72);
+  background: rgba(105, 39, 28, 0.92);
+  color: #f2dfb8;
+  font: 600 0.88em / 1.2 var(--font-heading);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(50, 28, 14, 0.35);
+}
+
+.correspondence-typewriter__send:hover,
+.correspondence-typewriter__send:focus-visible {
+  background: #4c241b;
+}
+
+.correspondence-typewriter__send:focus-visible {
+  outline: 2px solid #4c241b;
   outline-offset: 2px;
 }
 
-.correspondence-form button {
-  justify-self: start;
-  margin-top: 0.8rem;
-  padding: 0.7rem 1.1rem;
-  border: 1px solid var(--color-dark-wood);
-  border-radius: 2px;
-  background: var(--color-dark-wood);
-  color: var(--color-parchment);
-  font-family: var(--font-heading);
+.correspondence-typewriter__send:disabled {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+.correspondence-typewriter__key {
+  position: absolute;
+  z-index: 3;
+  width: 4.1%;
+  height: 3.6%;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(225, 181, 104, 0.2);
+  border-radius: 50%;
+  background: rgba(50, 31, 17, 0.22);
+  color: transparent;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.correspondence-form button:hover {
-  background: var(--color-charcoal);
+.correspondence-typewriter__key:hover {
+  border-color: rgba(255, 218, 147, 0.82);
+  background: rgba(151, 83, 22, 0.5);
 }
 
-.correspondence-form__status {
-  min-height: 1.5em;
-  margin: 0;
-  color: var(--color-dark-wood);
+.correspondence-typewriter__key.is-pressed {
+  transform: translate(-50%, calc(-50% + 2px)) scale(0.9);
+  border-color: rgba(255, 230, 178, 0.92);
+  background: radial-gradient(ellipse at 40% 25%, rgba(255, 222, 150, 0.94), rgba(151, 83, 22, 0.88) 62%, rgba(47, 26, 15, 0.82));
+  box-shadow: inset 0 2px 3px rgba(22, 12, 6, 0.8), 0 0 0.6cqw rgba(255, 184, 74, 0.5);
+}
+
+.correspondence-typewriter__key:focus-visible {
+  outline: 2px solid var(--color-antique-gold);
+  outline-offset: 2px;
+}
+
+.correspondence-typewriter__key.is-number { height: 3.7%; }
+.correspondence-typewriter__key.is-space { left: 50%; width: 39%; height: 4%; border-radius: 4px; }
+.correspondence-typewriter__key.is-return,
+.correspondence-typewriter__key.is-backspace { width: 5.4%; height: 5.2%; border-radius: 35%; }
+
+.correspondence-typewriter__status {
+  min-height: 1.4em;
+  margin: -0.4rem auto 0;
+  color: #e2d0a7;
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.15vw, 1rem);
+  font-style: italic;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.correspondence-typewriter__status.is-success { color: #e6d3a4; }
+.correspondence-typewriter__status.is-error { color: #ffcfad; }
+
+.correspondence-delivery-note {
+  max-width: 44rem;
+  margin: 0.25rem auto 0;
+  color: rgba(224, 206, 168, 0.86);
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: clamp(0.64rem, 0.85vw, 0.76rem);
+  line-height: 1.55;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
-@media (max-width: 40rem) {
+@media (max-width: 44rem) {
   .correspondence-page {
-    max-height: calc(100dvh - 1rem);
-    padding: 1.25rem;
+    min-height: calc(100svh - 7rem);
+    padding: 1.8rem max(var(--gutter), 1rem) 2rem;
+    overflow: hidden;
   }
+
+  .correspondence-heading { margin-bottom: 0.3rem; }
+  .correspondence-heading h1 { font-size: clamp(1.65rem, 7.4vw, 2.2rem); }
+  .correspondence-heading > span { font-size: 0.95rem; }
+
+  .correspondence-typewriter {
+    width: min(100%, 35rem);
+    margin-top: 10rem;
+  }
+
+  .correspondence-typewriter__machine { aspect-ratio: 3 / 2; }
+
+  .correspondence-typewriter__paper {
+    top: -9.8rem;
+    left: 4%;
+    width: 92%;
+    height: 10.8rem;
+    gap: 0.42rem 0.6rem;
+    padding: 0.9rem 1rem 0.75rem;
+    border: 1px solid rgba(91, 56, 31, 0.6);
+    background-color: #d6b983;
+    background-image: url('/reference/laboratory-aged-parchment.png');
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 0.45rem 0.8rem rgba(0, 0, 0, 0.38);
+    font-size: 0.8rem;
+  }
+
+  .correspondence-typewriter__field,
+  .correspondence-typewriter__field--message {
+    grid-template-columns: 4.1rem minmax(0, 1fr);
+    gap: 0.45rem;
+  }
+
+  .correspondence-typewriter__field textarea { height: 2.4em; }
+  .correspondence-typewriter__status { margin-top: 0.25rem; }
+  .correspondence-delivery-note { margin-top: 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .correspondence-typewriter__key { transition: none; }
 }

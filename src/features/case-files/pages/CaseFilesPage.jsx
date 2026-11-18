@@ -5,7 +5,7 @@ import './case-files.css'
 
 export default function CaseFilesPage() {
   return (
-    <main className="case-files-page">
+    <div className="case-files-page">
       <div className="case-board">
         <div className="case-board__backdrop" aria-hidden="true" />
 
@@ -29,6 +29,6 @@ export default function CaseFilesPage() {
           </section>
         </div>
       </div>
-    </main>
+    </div>
   )
 }

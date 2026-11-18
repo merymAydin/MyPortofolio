@@ -1,0 +1,414 @@
+.laboratory-page {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: calc(100svh - 8rem);
+  margin: 0;
+  padding: clamp(1.5rem, 3vh, 2.4rem) max(var(--gutter), calc((100vw - 82rem) / 2)) clamp(1.2rem, 2.5vw, 2.25rem);
+  overflow: hidden;
+  background-image:
+    linear-gradient(180deg, rgba(24, 13, 8, 0.34), rgba(29, 16, 9, 0.16) 28%, rgba(25, 14, 8, 0.25)),
+    url('/reference/laboratory-mahogany-desk.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--color-ink);
+}
+
+.laboratory-page::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 12%, rgba(207, 139, 54, 0.18), transparent 40%),
+    linear-gradient(90deg, rgba(23, 17, 12, 0.12), transparent 15% 85%, rgba(23, 17, 12, 0.12));
+  content: '';
+  pointer-events: none;
+}
+
+.laboratory-page__heading {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto clamp(1rem, 2vh, 1.5rem);
+  color: var(--color-parchment);
+  text-align: center;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.82));
+}
+
+.laboratory-page__heading p {
+  margin: 0 0 0.8rem;
+  color: #d2ad6a;
+  font-family: var(--font-mono);
+  font-size: clamp(0.63rem, 0.95vw, 0.82rem);
+  letter-spacing: 0.31em;
+}
+
+.laboratory-page__heading h1 {
+  margin: 0;
+  color: #d4b278;
+  font-family: var(--font-body);
+  font-size: clamp(3.25rem, 7.2vw, 6.4rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 0.94;
+  text-shadow: 0 2px 0 rgba(34, 20, 10, 0.8), 0 6px 14px rgba(0, 0, 0, 0.6);
+}
+
+.laboratory-page__heading-rule {
+  position: relative;
+  width: min(27rem, 72vw);
+  height: 1px;
+  margin: clamp(0.85rem, 1.7vh, 1.2rem) auto 0.8rem;
+  background: linear-gradient(90deg, transparent, #b99a5e 15% 48%, #ddbd78 50%, #b99a5e 52% 85%, transparent);
+  box-shadow: 0 1px rgba(25, 14, 8, 0.8);
+}
+
+.laboratory-page__heading-rule::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid #c6a566;
+  background: #3b2514;
+  content: '';
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.laboratory-page__heading h2 {
+  margin: 0;
+  color: #d5b878;
+  font-family: var(--font-heading);
+  font-size: clamp(0.86rem, 1.3vw, 1.08rem);
+  font-weight: 500;
+  letter-spacing: 0.43em;
+}
+
+.laboratory-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas: 'frontend backend' 'testing tools';
+  align-items: start;
+  gap: clamp(0.65rem, 1.4vw, 1.3rem) clamp(0.7rem, 1.6vw, 1.5rem);
+  width: min(100%, 83rem);
+  margin: 0 auto;
+  padding: 0 0.25rem;
+}
+
+.laboratory-panel {
+  --paper-base: #c4965c;
+  position: relative;
+  min-width: 0;
+  min-height: clamp(16rem, 20vw, 18.5rem);
+  padding: clamp(1.35rem, 2.4vw, 2.15rem) clamp(1.25rem, 2.5vw, 2.35rem);
+  isolation: isolate;
+  background-color: var(--paper-base);
+  background-image:
+    radial-gradient(ellipse at 7% 8%, rgba(255, 228, 171, 0.53), transparent 31%),
+    radial-gradient(ellipse at 94% 92%, rgba(89, 47, 22, 0.22), transparent 28%),
+    radial-gradient(ellipse at 52% 48%, rgba(241, 208, 145, 0.45), transparent 63%),
+    radial-gradient(ellipse at 90% 14%, rgba(128, 76, 34, 0.12), transparent 17%),
+    linear-gradient(135deg, rgba(237, 204, 147, 0.27), rgba(116, 70, 35, 0.12)),
+    url('/reference/laboratory-aged-parchment.png');
+  background-position: center;
+  background-size: auto, auto, auto, auto, auto, cover;
+  background-repeat: no-repeat;
+  color: #251a12;
+  filter: drop-shadow(0 0.8rem 0.65rem rgba(0, 0, 0, 0.62));
+}
+
+.laboratory-panel:nth-child(1) {
+  grid-area: frontend;
+  clip-path: polygon(1.4% 2.2%, 7% 1%, 12% 1.8%, 19% 0.8%, 27% 2%, 34% 0.7%, 43% 1.7%, 51% 0.4%, 59% 1.7%, 67% 0.9%, 76% 1.9%, 85% 0.7%, 93% 1.7%, 98% 0.9%, 99.2% 6%, 98.4% 15%, 99.6% 26%, 98.7% 38%, 99.4% 51%, 98.5% 64%, 99.5% 78%, 98.4% 90%, 97.5% 97%, 91% 98%, 83% 97%, 74% 99%, 64% 97.8%, 54% 99.2%, 45% 98%, 34% 99.1%, 24% 97.7%, 13% 98.8%, 3% 97.4%, 0.6% 92%, 1.4% 80%, 0.5% 68%, 1.3% 54%, 0.3% 42%, 1.3% 30%, 0.5% 17%, 1.2% 8%);
+  transform: rotate(-0.75deg) translate(0.25rem, 0.25rem);
+}
+
+.laboratory-panel:nth-child(2) {
+  grid-area: backend;
+  min-height: calc(clamp(16rem, 20vw, 18.5rem) + 0.55rem);
+  clip-path: polygon(2.1% 1.1%, 9% 1.8%, 16% 0.7%, 23% 1.9%, 32% 0.8%, 40% 1.8%, 49% 0.6%, 58% 1.8%, 67% 0.8%, 76% 2%, 85% 0.7%, 94% 1.6%, 98% 0.8%, 99.1% 7%, 98.4% 19%, 99.5% 31%, 98.4% 45%, 99.6% 58%, 98.4% 72%, 99.1% 89%, 96.5% 98%, 87% 97.3%, 78% 99%, 67% 97.5%, 57% 98.9%, 46% 97.4%, 35% 99%, 25% 97.5%, 14% 99.2%, 3.4% 98%, 0.6% 93%, 1.3% 79%, 0.3% 65%, 1.2% 51%, 0.4% 37%, 1.2% 23%, 0.3% 11%);
+  transform: rotate(0.65deg) translate(-0.15rem, 0.55rem);
+}
+
+.laboratory-panel:nth-child(3) {
+  grid-area: testing;
+  min-height: calc(clamp(16rem, 20vw, 18.5rem) - 0.35rem);
+  clip-path: polygon(1.2% 1.8%, 8% 0.7%, 16% 2%, 24% 0.9%, 33% 1.8%, 42% 0.7%, 51% 1.6%, 61% 0.5%, 70% 1.7%, 80% 0.8%, 89% 1.9%, 97% 0.8%, 99.5% 7%, 98.6% 19%, 99.6% 32%, 98.7% 47%, 99.5% 63%, 98.6% 78%, 99.1% 90%, 97% 97%, 89% 98.6%, 78% 97.4%, 69% 99%, 58% 97.7%, 48% 99.2%, 38% 97.8%, 27% 99.3%, 16% 97.5%, 5% 99%, 0.2% 95%, 1.3% 81%, 0.3% 65%, 1.4% 49%, 0.4% 34%, 1.2% 18%, 0.5% 8%);
+  transform: rotate(0.55deg) translate(0.1rem, -0.1rem);
+}
+
+.laboratory-panel:nth-child(4) {
+  grid-area: tools;
+  clip-path: polygon(1.7% 1%, 9% 2%, 18% 0.8%, 27% 1.9%, 36% 0.6%, 45% 1.9%, 54% 0.8%, 64% 2%, 73% 0.7%, 82% 1.8%, 91% 0.6%, 97.2% 1.5%, 99.7% 7%, 98.4% 20%, 99.6% 33%, 98.5% 47%, 99.4% 62%, 98.4% 78%, 99.1% 92%, 96.4% 99%, 86% 97.4%, 76% 98.9%, 66% 97.5%, 55% 99%, 45% 97.5%, 35% 99.2%, 25% 97.7%, 15% 99%, 5% 97.5%, 0.5% 94%, 1.4% 80%, 0.3% 65%, 1.3% 50%, 0.4% 35%, 1.4% 20%, 0.4% 9%);
+  transform: rotate(-0.65deg) translate(-0.2rem, 0.25rem);
+}
+
+.laboratory-panel::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0.8rem;
+  border: 1px solid rgba(70, 43, 23, 0.66);
+  background:
+    radial-gradient(circle at 0 0, transparent 0.55rem, rgba(82, 50, 28, 0.52) 0.58rem, transparent 0.64rem),
+    radial-gradient(circle at 100% 0, transparent 0.55rem, rgba(82, 50, 28, 0.52) 0.58rem, transparent 0.64rem),
+    radial-gradient(circle at 0 100%, transparent 0.55rem, rgba(82, 50, 28, 0.52) 0.58rem, transparent 0.64rem),
+    radial-gradient(circle at 100% 100%, transparent 0.55rem, rgba(82, 50, 28, 0.52) 0.58rem, transparent 0.64rem);
+  content: '';
+  pointer-events: none;
+}
+
+.laboratory-panel__paperwear {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 5% 28%, rgba(76, 44, 24, 0.24), transparent 18%),
+    radial-gradient(ellipse at 94% 11%, rgba(88, 50, 26, 0.2), transparent 13%),
+    radial-gradient(ellipse at 83% 91%, rgba(91, 51, 25, 0.22), transparent 19%),
+    radial-gradient(ellipse at 37% 77%, rgba(255, 228, 168, 0.22), transparent 25%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.19'/%3E%3C/svg%3E");
+  background-size: auto, auto, auto, auto, 180px 180px;
+  mix-blend-mode: multiply;
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+.laboratory-panel::after {
+  position: absolute;
+  z-index: 0;
+  inset: 1.02rem;
+  border: 1px solid rgba(106, 66, 35, 0.24);
+  content: '';
+  pointer-events: none;
+}
+
+.laboratory-panel__pin {
+  position: absolute;
+  z-index: 3;
+  top: 0.15rem;
+  right: 12%;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid rgba(55, 33, 16, 0.8);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 24%, #f3d88e 0 9%, #c3a05d 25%, #8b612f 67%, #402614 100%);
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.66), inset 0 1px 1px rgba(255, 241, 190, 0.7);
+}
+
+.laboratory-panel:nth-child(2) .laboratory-panel__pin {
+  top: 0.5rem;
+  right: 8%;
+  width: 0.72rem;
+  height: 0.72rem;
+}
+
+.laboratory-panel:nth-child(3) .laboratory-panel__pin {
+  top: auto;
+  right: auto;
+  bottom: 0.4rem;
+  left: 11%;
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.laboratory-panel__header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  gap: clamp(0.55rem, 1vw, 0.9rem);
+  padding: 0 0 0.65rem 0.3rem;
+}
+
+.laboratory-panel__header > span {
+  flex: none;
+  color: #352316;
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1.55vw, 1.4rem);
+  font-weight: 600;
+}
+
+.laboratory-panel__header h2 {
+  margin: 0;
+  color: #26190f;
+  font-family: var(--font-heading);
+  font-size: clamp(0.95rem, 1.55vw, 1.38rem);
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  line-height: 1.22;
+  text-transform: uppercase;
+}
+
+.laboratory-panel__rule {
+  position: relative;
+  z-index: 1;
+  height: 1px;
+  margin: 0 0 1.1rem;
+  background: linear-gradient(90deg, transparent, rgba(80, 49, 27, 0.78) 12% 86%, transparent);
+}
+
+.laboratory-panel__rule::after {
+  position: absolute;
+  top: -0.16rem;
+  left: 50%;
+  width: 0.35rem;
+  height: 0.35rem;
+  border: 1px solid rgba(80, 49, 27, 0.8);
+  background: #c59a5e;
+  content: '';
+  transform: rotate(45deg);
+}
+
+.laboratory-panel__body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 0.7fr) minmax(0, 1.6fr);
+  align-items: center;
+  gap: clamp(0.7rem, 1.55vw, 1.35rem);
+  padding: 0 0.1rem;
+}
+
+.laboratory-panel__illustration {
+  display: grid;
+  place-items: center;
+  min-height: 8.5rem;
+  color: rgba(58, 37, 22, 0.74);
+  filter: drop-shadow(1px 1px rgba(245, 222, 176, 0.32));
+}
+
+.laboratory-panel__illustration svg {
+  width: min(100%, 9.3rem);
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.laboratory-panel__skills {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: center;
+  column-gap: clamp(0.55rem, 1vw, 0.9rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.laboratory-panel__skills li {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  padding: 0.43rem 0.25rem 0.4rem 1rem;
+  border-bottom: 1px solid rgba(92, 57, 30, 0.34);
+  color: #24180f;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.2vw, 1.14rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.laboratory-panel__skills li::before {
+  position: absolute;
+  top: 0.84em;
+  left: 0.18rem;
+  width: 0.34rem;
+  height: 0.34rem;
+  border: 1px solid rgba(92, 57, 30, 0.76);
+  background: rgba(180, 154, 107, 0.68);
+  content: '';
+  transform: rotate(45deg);
+}
+
+.laboratory-panel__skills li:nth-child(odd) {
+  border-right: 1px solid rgba(92, 57, 30, 0.22);
+}
+
+@media (max-width: 58rem) {
+  .laboratory-page {
+    padding-right: max(var(--gutter), 1.5rem);
+    padding-left: max(var(--gutter), 1.5rem);
+  }
+
+  .laboratory-panel {
+    min-height: 18.5rem;
+    padding: 1.55rem 1.35rem;
+  }
+
+  .laboratory-panel__body {
+    grid-template-columns: minmax(5rem, 0.55fr) minmax(0, 1.5fr);
+  }
+
+  .laboratory-panel__skills { column-gap: 0.45rem; }
+}
+
+@media (max-width: 42rem) {
+  .laboratory-page {
+    min-height: auto;
+    margin: 0;
+    padding-top: 2.8rem;
+    padding-bottom: 3rem;
+    background-position: center;
+  }
+
+  .laboratory-page__heading {
+    margin-bottom: 2rem;
+  }
+
+  .laboratory-page__heading p {
+    letter-spacing: 0.18em;
+  }
+
+  .laboratory-page__heading h1 {
+    max-width: calc(100vw - 2rem);
+    margin-inline: auto;
+    font-size: clamp(2.1rem, 10vw, 3.2rem);
+  }
+
+  .laboratory-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'frontend' 'backend' 'testing' 'tools';
+    gap: 0.9rem;
+  }
+
+  .laboratory-panel,
+  .laboratory-panel:nth-child(2),
+  .laboratory-panel:nth-child(3),
+  .laboratory-panel:nth-child(4) {
+    min-height: 16rem;
+    padding: 1.4rem 1.25rem;
+    transform: none;
+  }
+
+  .laboratory-panel__header h2 {
+    min-width: 0;
+    font-size: clamp(0.9rem, 4vw, 1.14rem);
+  }
+
+  .laboratory-panel__header {
+    flex-wrap: wrap;
+  }
+
+  .laboratory-panel__body {
+    grid-template-columns: minmax(4.25rem, 0.48fr) minmax(0, 1.52fr);
+    gap: 0.7rem;
+  }
+
+  .laboratory-panel__illustration {
+    min-height: 6.5rem;
+  }
+
+  .laboratory-panel__skills li { padding-right: 0.15rem; font-size: 0.98rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .laboratory-panel {
+    transform: none;
+  }
+}

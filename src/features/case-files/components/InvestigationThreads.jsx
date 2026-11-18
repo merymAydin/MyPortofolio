@@ -1,9 +1,6 @@
+import { useLayoutEffect, useRef, useState } from 'react'
+
 const THREAD_PATHS = {
-  overview: [
-    'M 168 470 C 416 318, 862 314, 1112 456',
-    'M 1112 456 C 1048 692, 920 846, 742 1006',
-    'M 168 470 C 292 694, 510 884, 742 1006',
-  ],
   detail: [
     'M 256 185 C 470 80, 830 55, 1080 84',
     'M 1080 84 C 1050 250, 950 370, 840 500',
@@ -18,7 +15,11 @@ const THREAD_PATHS = {
   ],
 }
 
-const OVERVIEW_PIN_POINTS = [[168, 470], [1112, 456], [742, 1006]]
+const OVERVIEW_CONNECTIONS = [
+  ['.case-card--1 .case-card__pin', '.case-card--2 .case-card__pin'],
+  ['.case-card--2 .case-card__pin', '.case-card--3 .case-card__pin'],
+  ['.case-card--3 .case-card__pin', '.case-card--1 .case-card__pin'],
+]
 
 const DETAIL_MOBILE_PATHS = [
   'M 75 100 C 200 160, 280 250, 330 420',
@@ -46,10 +47,12 @@ const DETAIL_PIN_POINTS = [
  * @param {string} [props.className] - Additional class names.
  */
 export default function InvestigationThreads({ variant = 'overview', className = '' }) {
-  const paths = THREAD_PATHS[variant] ?? THREAD_PATHS.overview
-  const viewBox = variant === 'detail' ? '0 0 1600 2200' : '0 0 1600 1400'
+  const layoutRef = useRef(null)
+  const [overview, setOverview] = useState({ width: 1, height: 1, paths: [] })
+  const viewBox = variant === 'detail' ? '0 0 1600 2200' : `0 0 ${overview.width} ${overview.height}`
 
   if (variant === 'detail') {
+    const paths = THREAD_PATHS.detail
     return (
       <>
         <svg
@@ -85,32 +88,72 @@ export default function InvestigationThreads({ variant = 'overview', className =
     )
   }
 
+  return <OverviewThreads layoutRef={layoutRef} data={overview} setData={setOverview} className={className} />
+}
+
+function OverviewThreads({ layoutRef, data, setData, className }) {
+  useLayoutEffect(() => {
+    const board = layoutRef.current?.parentElement
+    if (!board) return undefined
+
+    const measure = () => {
+      const boardBox = board.getBoundingClientRect()
+      const width = Math.max(1, boardBox.width)
+      const height = Math.max(1, board.scrollHeight, boardBox.height)
+      const paths = OVERVIEW_CONNECTIONS.flatMap(([fromSelector, toSelector], index) => {
+        const from = board.querySelector(fromSelector)?.getBoundingClientRect()
+        const to = board.querySelector(toSelector)?.getBoundingClientRect()
+        if (!from || !to) return []
+
+        const start = {
+          x: from.left + from.width / 2 - boardBox.left,
+          y: from.top + from.height / 2 - boardBox.top,
+        }
+        const end = {
+          x: to.left + to.width / 2 - boardBox.left,
+          y: to.top + to.height / 2 - boardBox.top,
+        }
+        const dx = end.x - start.x
+        const dy = end.y - start.y
+        const length = Math.hypot(dx, dy) || 1
+        const curve = Math.min(54, length * 0.07) * (index % 2 === 0 ? -1 : 1)
+        const control = {
+          x: (start.x + end.x) / 2 - (dy / length) * curve,
+          y: (start.y + end.y) / 2 + (dx / length) * curve,
+        }
+        return [{ d: `M ${start.x.toFixed(1)} ${start.y.toFixed(1)} Q ${control.x.toFixed(1)} ${control.y.toFixed(1)} ${end.x.toFixed(1)} ${end.y.toFixed(1)}` }]
+      })
+
+      setData((current) => ({ ...current, width, height, paths }))
+    }
+
+    const observer = new ResizeObserver(measure)
+    observer.observe(board)
+    board.querySelectorAll('.case-card__pin').forEach((pin) => observer.observe(pin))
+    window.addEventListener('resize', measure)
+    measure()
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [layoutRef, setData])
+
   return (
     <svg
-      className={`evidence-threads evidence-threads--${variant} ${className}`.trim()}
-      viewBox={viewBox}
+      ref={layoutRef}
+      className={`evidence-threads evidence-threads--overview ${className}`.trim()}
+      viewBox={`0 0 ${data.width} ${data.height}`}
       preserveAspectRatio="none"
       aria-hidden="true"
       focusable="false"
     >
-      <defs>
-        <radialGradient id="overview-brass-pin" cx="32%" cy="24%" r="78%">
-          <stop offset="0" stopColor="#f8e6ad" />
-          <stop offset=".32" stopColor="#c5a462" />
-          <stop offset=".68" stopColor="#80602f" />
-          <stop offset="1" stopColor="#3c2a17" />
-        </radialGradient>
-      </defs>
-      {paths.map((d) => (
-        <g key={d}>
-          <path className="evidence-thread evidence-thread--shadow" d={d} />
-          <path className="evidence-thread evidence-thread--cord" d={d} />
-          <path className="evidence-thread evidence-thread--twist" d={d} />
+      {data.paths.map((path) => (
+        <g key={path.d}>
+          <path className="evidence-thread evidence-thread--shadow" d={path.d} />
+          <path className="evidence-thread evidence-thread--cord" d={path.d} />
+          <path className="evidence-thread evidence-thread--twist" d={path.d} />
         </g>
       ))}
-      <g className="evidence-thread__pins" aria-hidden="true">
-        {OVERVIEW_PIN_POINTS.map(([cx, cy]) => <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="10" />)}
-      </g>
     </svg>
   )
 }

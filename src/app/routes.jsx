@@ -15,8 +15,8 @@ const LibraryPage = lazy(() => import('../features/library/pages/LibraryPage.jsx
 /**
  * Route table.
  *
- * The homepage and the full-page Case Files experience sit outside the
- * shared Layout. Other archive sections keep the shared shell.
+ * The immersive library home is standalone; all archive routes share the
+ * navigation and page shell.
  */
 export default function AppRoutes() {
   return (
@@ -30,12 +30,11 @@ export default function AppRoutes() {
         }
       />
 
-      <Route path={ROUTES.caseFiles} element={<CaseFilesPage />} />
-      <Route path={ROUTES.caseFilePattern} element={<CaseFileDetailPage />} />
-
       <Route element={<Layout />}>
         <Route path={ROUTES.author} element={<AuthorPage />} />
         <Route path={ROUTES.laboratory} element={<LaboratoryPage />} />
+        <Route path={ROUTES.caseFiles} element={<CaseFilesPage />} />
+        <Route path={ROUTES.caseFilePattern} element={<CaseFileDetailPage />} />
         <Route path={ROUTES.chronicles} element={<ChroniclesPage />} />
         <Route path={ROUTES.correspondence} element={<CorrespondencePage />} />
         <Route path="*" element={<NotFoundPage />} />

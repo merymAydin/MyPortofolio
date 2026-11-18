@@ -9,11 +9,11 @@ const CORK_IMAGE = '/reference/amber-vial-cork.png'
 const SCENE_WIDTH = 1672
 const SCENE_HEIGHT = 941
 const PAGES = [
-  { label: 'The Author', detail: 'About Me', to: ROUTES.author, box: [405, 285, 400, 78] },
-  { label: 'The Laboratory', detail: 'Technical Skills', to: ROUTES.laboratory, box: [405, 450, 400, 78] },
-  { label: 'Case Files', detail: 'Projects', to: ROUTES.caseFiles, box: [405, 615, 400, 78] },
-  { label: 'The Chronicles', detail: 'Education & Experience', to: ROUTES.chronicles, box: [872, 350, 405, 78] },
-  { label: 'Correspondence', detail: 'Contact & CV', to: ROUTES.correspondence, box: [872, 535, 405, 78] },
+  { label: 'The Author', detail: 'About Me', to: ROUTES.author, box: [405, 278, 400, 92] },
+  { label: 'The Laboratory', detail: 'Technical Skills', to: ROUTES.laboratory, box: [405, 443, 400, 92] },
+  { label: 'Case Files', detail: 'Projects', to: ROUTES.caseFiles, box: [405, 608, 400, 92] },
+  { label: 'The Chronicles', detail: 'Education & Experience', to: ROUTES.chronicles, box: [872, 343, 405, 92] },
+  { label: 'Correspondence', detail: 'Contact & CV', to: ROUTES.correspondence, box: [872, 528, 405, 92] },
 ]
 const MAG_SIZE = { width: 290, height: 460 }
 const VIAL_SIZE = { width: 155, height: 245 }
@@ -373,6 +373,10 @@ export default function OpenJournalScene({
 
   const magStyle = positionOnScene([magnifierPosition.x, magnifierPosition.y, MAG_SIZE.width, MAG_SIZE.height])
   const vialStyle = positionOnScene([vialPosition.x, vialPosition.y, VIAL_SIZE.width, VIAL_SIZE.height])
+  const vialNeck = {
+    x: vialPosition.x + VIAL_SIZE.width * 0.31,
+    y: vialPosition.y + VIAL_SIZE.height * 0.13,
+  }
   const liquidStreamStyle = pouring && pourPoint
     ? positionOnScene([
       vialPosition.x + VIAL_SIZE.width * 0.31 - 6,
@@ -573,24 +577,24 @@ export default function OpenJournalScene({
       <div className="open-journal-scene__vial-guidance" aria-live="polite">
         <span
           className={`open-journal-scene__hint open-journal-scene__hint--open${corkOpened ? ' is-dismissed' : ''}`}
-          style={positionOnScene([vialPosition.x - 160, vialPosition.y - 120, 320, 62])}
+          style={positionOnScene([vialNeck.x - 118, vialNeck.y - 92, 236, 38])}
           aria-hidden={corkOpened}
         >
           Open the vial
         </span>
         <svg
           className={`open-journal-scene__vial-arrow${corkOpened ? ' is-dismissed' : ''}`}
-          style={positionOnScene([vialPosition.x - 150, vialPosition.y - 40, 205, 82])}
-          viewBox="0 0 205 82"
+          style={positionOnScene([vialNeck.x - 17, vialNeck.y - 49, 34, 50])}
+          viewBox="0 0 34 50"
           aria-hidden="true"
           focusable="false"
         >
-          <path d="M 8 12 C 50 4, 91 12, 128 30 S 169 53, 198 67" />
-          <path className="open-journal-scene__vial-arrowhead" d="M 185 56 L 198 67 L 184 74" />
+          <path d="M 17 1 C 17 15, 17 31, 17 47" />
+          <path className="open-journal-scene__vial-arrowhead" d="M 10 39 L 17 49 L 24 39" />
         </svg>
         <span
           className={`open-journal-scene__hint open-journal-scene__hint--pour${!corkOpened || pourStarted || pouring ? ' is-dismissed' : ''}`}
-          style={positionOnScene([vialPosition.x - 360, vialPosition.y - 10, 330, 54])}
+          style={positionOnScene([vialNeck.x - 165, vialNeck.y - 92, 330, 44])}
           aria-hidden={!corkOpened}
         >
           Pour the liquid onto the page to reveal hidden text.
