@@ -52,14 +52,14 @@ export default function ChroniclesPage() {
               <div className="experience-record__company">
                 <h3>Belbim Elektronik Para ve Ödeme Hizmetleri A.Ş.</h3>
                 <p className="experience-record__location"><span aria-hidden="true">⌖</span> Istanbul, Türkiye</p>
+                <p className="experience-record__role">Software Developer Intern</p>
+                <p className="experience-record__dates"><span aria-hidden="true">▦</span> August 2026 – September 2026</p>
               </div>
               <figure className="experience-record__engraving">
                 <img src="/reference/istanbul-engraving.png" width="222" height="195" alt="Sepia engraving of a historical Istanbul tram and Galata Tower" />
               </figure>
             </div>
 
-            <p className="experience-record__role">Software Developer Intern</p>
-            <p className="experience-record__dates"><span aria-hidden="true">▦</span> August 2026 – September 2026</p>
             <div className="experience-record__ornament" aria-hidden="true"><span /></div>
             <div className="experience-record__evidence">
               <ul className="experience-record__details">

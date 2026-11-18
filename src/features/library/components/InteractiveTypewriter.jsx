@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { ROUTES } from '../../../app/routePaths.js'
+import TypewriterMessageForm from '../../correspondence/components/TypewriterMessageForm.jsx'
+import useTypewriterEmail from '../../correspondence/hooks/useTypewriterEmail.js'
 
 const TYPEWRITER_IMAGE = '/reference/front-facing-typewriter-cutout.png'
 const KEY_ROWS = [
@@ -50,10 +52,12 @@ const SCENE_KEY_ROWS = [
 ]
 
 export default function InteractiveTypewriter({ positionOnScene, onForegroundChange }) {
+  const emailForm = useTypewriterEmail()
   const [typedText, setTypedText] = useState('')
   const [hasStarted, setHasStarted] = useState(false)
   const [activeKey, setActiveKey] = useState('')
   const [isForeground, setIsForeground] = useState(false)
+  const [isCompactScreen, setIsCompactScreen] = useState(() => window.matchMedia('(max-aspect-ratio: 4/3)').matches)
   const releaseTimer = useRef(null)
   const pressedRef = useRef(new Set())
 
@@ -90,6 +94,13 @@ export default function InteractiveTypewriter({ positionOnScene, onForegroundCha
   }, [])
 
   useEffect(() => {
+    const query = window.matchMedia('(max-aspect-ratio: 4/3)')
+    const updateScreenMode = () => setIsCompactScreen(query.matches)
+    query.addEventListener('change', updateScreenMode)
+    return () => query.removeEventListener('change', updateScreenMode)
+  }, [])
+
+  useEffect(() => {
     const onKeyDown = (event) => {
       if (isEditableTarget(event.target) || event.altKey || event.ctrlKey || event.metaKey) return
       const label = mapCodeToLabel(event.code)
@@ -123,7 +134,16 @@ export default function InteractiveTypewriter({ positionOnScene, onForegroundCha
     }
   }, [activeKey, press])
 
-  const handleKeyClick = (key) => press(key, key === ' ' ? 'Space' : key === 'Enter' ? 'Enter' : key === 'Backspace' ? 'Backspace' : undefined)
+  const handleKeyClick = (key) => {
+    if (isForeground) {
+      emailForm.typeKey(key)
+      setHasStarted(true)
+      return
+    }
+    press(key, key === ' ' ? 'Space' : key === 'Enter' ? 'Enter' : key === 'Backspace' ? 'Backspace' : undefined)
+  }
+
+  const visibleActiveKey = isForeground ? emailForm.activeKey : activeKey
 
   const openForeground = () => {
     setIsForeground(true)
@@ -139,6 +159,16 @@ export default function InteractiveTypewriter({ positionOnScene, onForegroundCha
     <div className="landing-typewriter" aria-label="Interactive typewriter">
       {!isForeground && (
         <div className="landing-typewriter__scene-layer">
+          {isCompactScreen && (
+            <button
+              className="landing-typewriter__mobile-open"
+              type="button"
+              aria-label="Open the study typewriter and message form"
+              onClick={openForeground}
+            >
+              Open the typewriter
+            </button>
+          )}
           <button
             className="landing-typewriter__scene-open"
             type="button"
@@ -215,24 +245,33 @@ export default function InteractiveTypewriter({ positionOnScene, onForegroundCha
       )}
 
       <div
-        className={`landing-typewriter__visual${isForeground ? ' is-foreground' : ''}`}
+        className={`landing-typewriter__visual${isForeground ? ' is-foreground' : ''}${isCompactScreen ? ' is-compact' : ''}`}
         style={visualStyle}
         aria-label="Front-facing antique mechanical typewriter"
       >
         <img className="landing-typewriter__machine" src={TYPEWRITER_IMAGE} alt="" draggable="false" />
 
-        <div className={`landing-typewriter__paper${typedText.length ? ' is-typing' : ''}`} aria-live="polite">
-          <span className="landing-typewriter__prompt" aria-hidden={Boolean(typedText.length)}>
-            SEND ME A MESSAGE
-          </span>
-          <span className="landing-typewriter__typed">{typedText || '\u00a0'}</span>
-        </div>
+        {isForeground ? (
+          <TypewriterMessageForm
+            controller={emailForm}
+            className="landing-typewriter__paper landing-typewriter__paper--form"
+            autoFocusName
+            statusOnPaper
+          />
+        ) : (
+          <div className={`landing-typewriter__paper${typedText.length ? ' is-typing' : ''}`} aria-live="polite">
+            <span className="landing-typewriter__prompt" aria-hidden={Boolean(typedText.length)}>
+              SEND ME A MESSAGE
+            </span>
+            <span className="landing-typewriter__typed">{typedText || '\u00a0'}</span>
+          </div>
+        )}
 
         {NUMBER_KEYS.map((key, index) => (
           <button
             key={`number-${key}`}
             type="button"
-            className={`landing-typewriter__key landing-typewriter__key--number${activeKey === key ? ' is-pressed' : ''}`}
+            className={`landing-typewriter__key landing-typewriter__key--number${visibleActiveKey === key ? ' is-pressed' : ''}`}
             style={{ left: `${26.8 + index * 4.12}%`, top: '63.1%' }}
             aria-label={`Type ${key}`}
             onClick={() => handleKeyClick(key)}
@@ -245,7 +284,7 @@ export default function InteractiveTypewriter({ positionOnScene, onForegroundCha
           <button
             key={`letter-${key}`}
             type="button"
-            className={`landing-typewriter__key${activeKey === key.toUpperCase() ? ' is-pressed' : ''}`}
+            className={`landing-typewriter__key${visibleActiveKey === key.toUpperCase() ? ' is-pressed' : ''}`}
             style={{ left: `${row.start + index * row.step}%`, top: `${row.y}%` }}
             aria-label={`Type ${key}`}
             onClick={() => handleKeyClick(key)}
@@ -256,31 +295,26 @@ export default function InteractiveTypewriter({ positionOnScene, onForegroundCha
 
         <button
           type="button"
-          className={`landing-typewriter__key landing-typewriter__key--space${activeKey === 'SPACE' ? ' is-pressed' : ''}`}
+          className={`landing-typewriter__key landing-typewriter__key--space${visibleActiveKey === 'SPACE' ? ' is-pressed' : ''}`}
           style={{ left: '50%', top: '85.8%', width: '39%' }}
           aria-label="Type a space"
           onClick={() => handleKeyClick(' ')}
         />
         <button
           type="button"
-          className={`landing-typewriter__key landing-typewriter__key--return${activeKey === 'ENTER' ? ' is-pressed' : ''}`}
+          className={`landing-typewriter__key landing-typewriter__key--return${visibleActiveKey === 'ENTER' ? ' is-pressed' : ''}`}
           style={{ left: '75.8%', top: '32.2%' }}
           aria-label="Start a new line"
           onClick={() => handleKeyClick('Enter')}
         />
         <button
           type="button"
-          className={`landing-typewriter__key landing-typewriter__key--backspace${activeKey === 'BACKSPACE' ? ' is-pressed' : ''}`}
+          className={`landing-typewriter__key landing-typewriter__key--backspace${visibleActiveKey === 'BACKSPACE' ? ' is-pressed' : ''}`}
           style={{ left: '21.5%', top: '32.2%' }}
           aria-label="Delete the last character"
           onClick={() => handleKeyClick('Backspace')}
         />
 
-        {hasStarted && (
-          <Link className="landing-typewriter__continue" to={ROUTES.correspondence}>
-            Continue to Correspondence ↗
-          </Link>
-        )}
       </div>
 
       {isForeground && (

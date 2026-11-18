@@ -257,12 +257,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: clamp(0.35rem, 0.65vw, 0.65rem);
   text-align: center;
 }
 
 .education-record__engraving {
-  width: min(100%, 15rem);
-  margin: 0.15rem auto 0.45rem;
+  width: min(100%, 13.5rem);
+  margin: 0.05rem auto 0;
 }
 
 .education-record__engraving img {
@@ -283,7 +284,7 @@
 
 .education-record h3 {
   max-width: 18ch;
-  margin: 0.25rem 0 0.65rem;
+  margin: 0;
   color: #24180f;
   font-family: var(--font-body);
   font-size: clamp(1.45rem, 2vw, 1.9rem);
@@ -296,7 +297,7 @@
   position: relative;
   width: 58%;
   height: 1px;
-  margin: 0.4rem auto 0.85rem;
+  margin: 0.25rem auto 0.55rem;
   background: linear-gradient(90deg, transparent, rgba(83, 50, 27, 0.72), transparent);
 }
 
@@ -313,7 +314,7 @@
 }
 
 .education-record__degree {
-  margin: 0.2rem 0 0.85rem;
+  margin: 0;
   color: #332116;
   font-size: clamp(1.25rem, 1.75vw, 1.55rem);
   font-style: italic;
@@ -321,7 +322,7 @@
 }
 
 .education-record__language {
-  margin: 0 0 1rem;
+  margin: 0;
   padding: 0.25rem 1.2rem;
   border: 1px solid rgba(86, 52, 28, 0.66);
   color: #2a1b10;
@@ -331,7 +332,7 @@
 }
 
 .education-record__dates {
-  margin: 0.45rem 0 0;
+  margin: 0.15rem 0 0;
   color: #2e1e12;
   font-size: clamp(1.35rem, 1.9vw, 1.7rem);
   font-style: italic;
@@ -340,8 +341,8 @@
 .experience-record__identity {
   display: grid;
   grid-template-columns: minmax(0, 1.65fr) minmax(0, 0.75fr);
-  align-items: center;
-  gap: clamp(0.6rem, 1.6vw, 1.4rem);
+  align-items: start;
+  gap: clamp(0.65rem, 1.35vw, 1.2rem);
   padding: 0.15rem 0.45rem 0.25rem;
 }
 
@@ -370,7 +371,7 @@
 }
 
 .experience-record__engraving {
-  width: min(100%, 13.5rem);
+  width: min(100%, 11.25rem);
   justify-self: end;
   margin: 0;
 }
@@ -387,7 +388,7 @@
 .experience-record__role {
   width: fit-content;
   max-width: 100%;
-  margin: 0.8rem 0 0.35rem;
+  margin: 0.7rem 0 0.32rem;
   padding: 0.32rem 1.35rem;
   border: 1px solid rgba(94, 57, 29, 0.65);
   background: linear-gradient(110deg, rgba(201, 157, 96, 0.82), rgba(228, 195, 137, 0.9), rgba(193, 144, 82, 0.82));
@@ -399,7 +400,7 @@
 }
 
 .experience-record__dates {
-  margin: 0.15rem 0 0.25rem 1.2rem;
+  margin: 0.15rem 0 0 1.2rem;
   color: #322114;
   font-size: clamp(1.05rem, 1.5vw, 1.3rem);
   font-style: italic;
@@ -413,12 +414,12 @@
 
 .experience-record__ornament {
   width: 74%;
-  margin: 0.9rem auto 1.05rem;
+  margin: 0.7rem auto 0.85rem;
 }
 
 .experience-record__details {
   display: grid;
-  gap: 0.72rem;
+  gap: clamp(0.52rem, 0.8vw, 0.72rem);
   margin: 0;
   padding: 0 0.35rem 0 1.35rem;
   max-width: 72ch;

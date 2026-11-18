@@ -545,6 +545,99 @@
   white-space: nowrap;
 }
 
+.landing-typewriter__paper--form {
+  display: grid;
+  align-content: center;
+  justify-content: stretch;
+  gap: 0.55cqw;
+  padding: 0.7cqw 1.25cqw 0.55cqw;
+  overflow: hidden;
+  color: rgba(48, 31, 18, 0.94);
+  font-size: clamp(10px, 2.1cqw, 17px);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.18;
+  text-align: left;
+  white-space: normal;
+  pointer-events: auto;
+}
+
+.landing-typewriter__paper--form .correspondence-typewriter__field {
+  display: grid;
+  grid-template-columns: clamp(2.5rem, 6.2cqw, 4.25rem) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.6cqw;
+  min-width: 0;
+  color: #51391f;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95em;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+.landing-typewriter__paper--form .correspondence-typewriter__field > span {
+  white-space: nowrap;
+}
+
+.landing-typewriter__paper--form .correspondence-typewriter__field input,
+.landing-typewriter__paper--form .correspondence-typewriter__field textarea {
+  min-width: 0;
+  width: 100%;
+  padding: 0 0.12em 0.14em;
+  border: 0;
+  border-bottom: 1px dotted rgba(76, 50, 30, 0.58);
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: #291b11;
+  font: inherit;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.landing-typewriter__paper--form .correspondence-typewriter__field textarea {
+  height: 2.5em;
+  resize: none;
+  line-height: 1.25;
+}
+
+.landing-typewriter__paper--form .correspondence-typewriter__field input:focus-visible,
+.landing-typewriter__paper--form .correspondence-typewriter__field textarea:focus-visible {
+  border-bottom-color: #7c321f;
+  box-shadow: 0 1px 0 #7c321f;
+}
+
+.landing-typewriter__paper--form .correspondence-typewriter__send {
+  justify-self: end;
+  padding: 0.2em 0.75em;
+  border: 1px solid rgba(94, 42, 28, 0.72);
+  background: rgba(105, 39, 28, 0.92);
+  color: #f2dfb8;
+  font: 600 0.9em / 1.15 var(--font-heading);
+  letter-spacing: 0.035em;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(50, 28, 14, 0.35);
+}
+
+.landing-typewriter__paper--form .correspondence-typewriter__send:disabled {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+.typewriter-message-form__status {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #50331e;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.78em;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: right;
+}
+
+.typewriter-message-form__status.is-success { color: #38512c; }
+.typewriter-message-form__status.is-error { color: #762f1f; }
+
 .landing-typewriter__prompt,
 .landing-typewriter__typed {
   display: block;
@@ -724,6 +817,65 @@
   .landing-screen__sound { right: 4.55rem !important; left: auto !important; }
   .landing-screen__fullscreen { right: 1rem !important; left: auto !important; }
   .landing-screen__journal { position: absolute; }
+
+  .landing-typewriter__close {
+    position: fixed;
+    top: 4.35rem;
+    right: 1rem;
+  }
+
+  .landing-typewriter__visual.is-foreground.is-compact {
+    position: fixed;
+    top: calc(50vh - 30vw) !important;
+    left: 5vw !important;
+    width: 90vw !important;
+    height: 60vw !important;
+  }
+
+  .landing-typewriter__visual.is-compact .landing-typewriter__paper--form {
+    gap: 0.2cqw;
+    padding: 0.15cqw 1cqw 0.25cqw;
+    font-size: 8.5px;
+  }
+
+  .landing-typewriter__visual.is-compact .landing-typewriter__paper--form .correspondence-typewriter__field {
+    grid-template-columns: 2.55rem minmax(0, 1fr);
+    gap: 0.35cqw;
+    font-size: 0.9em;
+  }
+
+  .landing-typewriter__visual.is-compact .landing-typewriter__paper--form .correspondence-typewriter__field textarea {
+    height: 1.45em;
+  }
+
+  .landing-typewriter__visual.is-compact .landing-typewriter__paper--form .correspondence-typewriter__send {
+    padding: 0.08em 0.5em;
+    font-size: 0.82em;
+  }
+
+  .landing-typewriter__mobile-open {
+    position: fixed;
+    z-index: 7;
+    bottom: 1rem;
+    left: 50%;
+    padding: 0.65rem 1.1rem;
+    transform: translateX(-50%);
+    border: 1px solid rgba(180, 154, 107, 0.72);
+    background: rgba(25, 15, 9, 0.9);
+    color: var(--color-parchment);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    pointer-events: auto;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.42);
+  }
+
+  .landing-typewriter__mobile-open:focus-visible {
+    outline: 2px solid var(--color-antique-gold);
+    outline-offset: 3px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -766,23 +918,32 @@
 
 .open-journal-scene__links a {
   position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.48rem;
-  padding: 0.48rem 0.7rem 0.62rem;
+  display: block;
+  padding: 0;
   border-bottom: 1px solid rgba(95, 66, 35, 0.3);
   color: #49331f;
   font-family: var(--font-heading);
-  font-size: clamp(0.7rem, 1.65vw, 1.55rem);
-  font-weight: 600;
-  letter-spacing: 0.035em;
-  line-height: 1.32;
   text-align: center;
   text-decoration: none;
   text-shadow: 0 1px 1px rgba(255, 239, 205, 0.45);
-  flex-direction: column;
   pointer-events: auto;
+  box-sizing: border-box;
+}
+
+.open-journal-scene__links a > span {
+  position: absolute;
+  top: clamp(0.45rem, 1vw, 0.75rem);
+  right: 0.35rem;
+  left: 0.35rem;
+  display: block;
+  color: rgba(72, 49, 30, 0.86);
+  font-family: var(--font-heading);
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.12;
+  text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .open-journal-scene__links a.is-concealed {
@@ -796,15 +957,33 @@
 }
 
 .open-journal-scene__links small {
-  display: block;
-  margin-top: 0;
-  font-family: var(--font-body);
-  font-size: clamp(0.65rem, 1.05vw, 1rem);
-  font-style: italic;
-  font-weight: 500;
-  letter-spacing: 0.015em;
-  line-height: 1.28;
-  text-wrap: balance;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 58rem) {
+  .open-journal-scene__links a > span {
+    top: 0.2rem;
+    right: 0.18rem;
+    left: 0.18rem;
+    font-size: clamp(0.5rem, 1.25vw, 0.68rem);
+    letter-spacing: 0.1em;
+    line-height: 1.05;
+  }
+}
+
+@media (max-width: 28rem) {
+  .open-journal-scene__links a > span {
+    top: 0.08rem;
+    right: 0.08rem;
+    left: 0.08rem;
+    font-size: clamp(0.34rem, 1.4vw, 0.42rem);
+    letter-spacing: 0.08em;
+  }
 }
 
 .open-journal-scene__ink-accessible {

@@ -1,6 +1,6 @@
 # Typewriter email delivery
 
-The Correspondence typewriter sends the `name`, `email`, and `message` values to the configured EmailJS service and template using `@emailjs/browser`.
+The Correspondence page and homepage study typewriter share the `useTypewriterEmail` hook. Both send the `name`, `email`, and `message` values to the configured EmailJS service and template using `@emailjs/browser`.
 
 ## Local configuration
 

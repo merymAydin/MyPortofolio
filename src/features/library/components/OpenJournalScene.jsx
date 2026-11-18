@@ -123,7 +123,7 @@ export default function OpenJournalScene({
     inkCtx.textAlign = 'center'
     inkCtx.textBaseline = 'middle'
     PAGES.forEach(({ detail, box }) => {
-      inkCtx.font = '700 44px "Cormorant Garamond", Georgia, serif'
+      inkCtx.font = '600 italic 40px "Cormorant Garamond", Georgia, serif'
       inkCtx.fillText(detail, box[0] + box[2] / 2, box[1] + 58, box[2] - 35)
     })
     inkCtx.globalCompositeOperation = 'destination-in'
