@@ -23,14 +23,10 @@ export default function PortraitMagnifier({ onLensMove = () => {} }) {
     return { width: magnifierWidth, height: magnifierWidth * 1.586 }
   }
 
-  const getMovementBounds = (rect, magnifierWidth, magnifierHeight) => {
-    const documentWidth = document.documentElement?.scrollWidth || window.innerWidth
-    const documentHeight = document.documentElement?.scrollHeight || window.innerHeight
-    return {
-      maxX: Math.max(rect.width + magnifierWidth * 2, documentWidth - rect.left + magnifierWidth),
-      maxY: Math.max(rect.height + magnifierHeight * 2, documentHeight - rect.top + magnifierHeight),
-    }
-  }
+  const getMovementBounds = (rect, magnifierWidth, magnifierHeight) => ({
+    maxX: Math.max(0, rect.width - magnifierWidth),
+    maxY: Math.max(0, rect.height - magnifierHeight),
+  })
 
   const drawLens = useCallback(() => {
     const stage = stageRef.current
@@ -106,14 +102,14 @@ export default function PortraitMagnifier({ onLensMove = () => {} }) {
           return {
             // Start beside the portrait; the user deliberately drags the
             // glass over it when they want to inspect the silhouette.
-            x: rect.width - magnifierWidth * 0.4,
-            y: Math.max(8, rect.height * 0.06),
+            x: Math.max(0, rect.width - magnifierWidth),
+            y: Math.min(Math.max(8, rect.height * 0.06), Math.max(0, rect.height - magnifierHeight)),
           }
         }
         const bounds = getMovementBounds(rect, magnifierWidth, magnifierHeight)
         return {
-          x: Math.min(Math.max(-magnifierWidth * 0.4, current.x), bounds.maxX),
-          y: Math.min(Math.max(-magnifierHeight * 0.12, current.y), bounds.maxY),
+          x: Math.min(Math.max(0, current.x), bounds.maxX),
+          y: Math.min(Math.max(0, current.y), bounds.maxY),
         }
       })
     }
@@ -137,12 +133,16 @@ export default function PortraitMagnifier({ onLensMove = () => {} }) {
     const { width: magnifierWidth, height: magnifierHeight } = getMagnifierSize(rect.width)
     const bounds = getMovementBounds(rect, magnifierWidth, magnifierHeight)
     setLensPosition({
-      x: Math.min(Math.max(-magnifierWidth * 0.4, clientX - rect.left - drag.offsetX), bounds.maxX),
-      y: Math.min(Math.max(-magnifierHeight * 0.12, clientY - rect.top - drag.offsetY), bounds.maxY),
+      x: Math.min(Math.max(0, clientX - rect.left - drag.offsetX), bounds.maxX),
+      y: Math.min(Math.max(0, clientY - rect.top - drag.offsetY), bounds.maxY),
     })
   }, [])
 
   const beginDrag = (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return
+    if (dragRef.current) return
+    event.preventDefault()
+    event.stopPropagation()
     const stage = stageRef.current
     if (!stage) return
     const rect = stage.getBoundingClientRect()
@@ -151,16 +151,24 @@ export default function PortraitMagnifier({ onLensMove = () => {} }) {
       offsetX: event.clientX - rect.left - lensPosition.x,
       offsetY: event.clientY - rect.top - lensPosition.y,
     }
-    event.currentTarget.setPointerCapture?.(event.pointerId)
+    try {
+      event.currentTarget.setPointerCapture(event.pointerId)
+    } catch {
+      // Pointer capture is unavailable in some embedded browser contexts.
+    }
   }
 
   const continueDrag = (event) => {
     if (dragRef.current?.pointerId !== event.pointerId) return
+    event.preventDefault()
+    event.stopPropagation()
     moveLens(event.clientX, event.clientY)
   }
 
   const endDrag = (event) => {
-    if (dragRef.current?.pointerId === event.pointerId) dragRef.current = null
+    if (dragRef.current?.pointerId !== event.pointerId) return
+    dragRef.current = null
+    event.stopPropagation()
   }
 
   const moveByKeyboard = (event) => {
@@ -176,13 +184,12 @@ export default function PortraitMagnifier({ onLensMove = () => {} }) {
     event.preventDefault()
     const { width: magnifierWidth, height: magnifierHeight } = getMagnifierSize(stageSize.width)
     const rect = stageRef.current?.getBoundingClientRect()
-    const bounds = rect ? getMovementBounds(rect, magnifierWidth, magnifierHeight) : {
-      maxX: stageSize.width + magnifierWidth * 2,
-      maxY: stageSize.height + magnifierHeight * 2,
-    }
+    const bounds = rect
+      ? getMovementBounds(rect, magnifierWidth, magnifierHeight)
+      : { maxX: Math.max(0, stageSize.width - magnifierWidth), maxY: Math.max(0, stageSize.height - magnifierHeight) }
     setLensPosition((current) => ({
-      x: Math.min(Math.max(-magnifierWidth * 0.4, current.x + dx), bounds.maxX),
-      y: Math.min(Math.max(-magnifierHeight * 0.12, current.y + dy), bounds.maxY),
+      x: Math.min(Math.max(0, current.x + dx), bounds.maxX),
+      y: Math.min(Math.max(0, current.y + dy), bounds.maxY),
     }))
   }
 
@@ -207,6 +214,7 @@ export default function PortraitMagnifier({ onLensMove = () => {} }) {
         onPointerMove={continueDrag}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
+        onLostPointerCapture={endDrag}
         onKeyDown={moveByKeyboard}
       >
         <img src={MAGNIFIER_SOURCE} alt="" draggable="false" />
