@@ -376,6 +376,7 @@
   z-index: 2;
   border: 0;
   background: transparent;
+  touch-action: manipulation;
 }
 
 .landing-screen__journal-hint {
@@ -806,7 +807,7 @@
   .landing-screen__mobile-title i::before,
   .landing-screen__mobile-title i::after { width: 2rem; }
 
-  .landing-screen__hotspot {
+  .landing-screen__hotspot:not(.landing-screen__journal) {
     position: fixed;
     top: 1.1rem !important;
     width: 2.75rem !important;
