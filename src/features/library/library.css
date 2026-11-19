@@ -941,16 +941,16 @@
 
 .open-journal-scene__links a > span {
   position: absolute;
-  top: clamp(0.45rem, 1vw, 0.75rem);
-  right: 0.35rem;
-  left: 0.35rem;
+  top: 18%;
+  right: 5%;
+  left: 5%;
   display: block;
   color: rgba(72, 49, 30, 0.86);
   font-family: var(--font-heading);
-  font-size: clamp(0.7rem, 1vw, 0.9rem);
+  font-size: clamp(6px, calc(38px * var(--page-scale, 1)), 0.9rem);
   font-weight: 500;
   letter-spacing: 0.14em;
-  line-height: 1.12;
+  line-height: 1.05;
   text-transform: uppercase;
   text-wrap: balance;
 }
@@ -976,22 +976,20 @@
 
 @media (max-width: 58rem) {
   .open-journal-scene__links a > span {
-    top: 0.2rem;
-    right: 0.18rem;
-    left: 0.18rem;
-    font-size: clamp(0.5rem, 1.25vw, 0.68rem);
-    letter-spacing: 0.1em;
-    line-height: 1.05;
+    top: 18%;
+    right: 5%;
+    left: 5%;
+    font-size: clamp(6px, calc(38px * var(--page-scale, 1)), 0.75rem);
+    letter-spacing: clamp(0.02em, calc(0.1em * var(--page-scale, 1)), 0.1em);
   }
 }
 
 @media (max-width: 28rem) {
   .open-journal-scene__links a > span {
-    top: 0.08rem;
-    right: 0.08rem;
-    left: 0.08rem;
-    font-size: clamp(0.65rem, 2.3vw, 0.82rem);
-    letter-spacing: 0.04em;
+    top: 18%;
+    right: 4%;
+    left: 4%;
+    font-size: clamp(6px, calc(38px * var(--page-scale, 1)), 0.7rem);
   }
 }
 

@@ -48,7 +48,7 @@ function PageLinks({ positionOnScene, revealedPages }) {
           key={to}
           to={to}
           className={isRevealed ? 'is-revealed' : 'is-concealed'}
-          style={positionOnScene(box)}
+          style={{ ...positionOnScene(box), '--page-scale': positionOnScene(box)?.width / box[2] }}
           aria-disabled={!isRevealed}
           tabIndex={isRevealed ? 0 : -1}
           onClick={(event) => { if (!isRevealed) event.preventDefault() }}
@@ -124,7 +124,7 @@ export default function OpenJournalScene({
     inkCtx.textBaseline = 'middle'
     PAGES.forEach(({ detail, box }) => {
       inkCtx.font = '600 italic 40px "Cormorant Garamond", Georgia, serif'
-      inkCtx.fillText(detail, box[0] + box[2] / 2, box[1] + 58, box[2] - 35)
+      inkCtx.fillText(detail, box[0] + box[2] / 2, box[1] + 69, box[2] - 35)
     })
     inkCtx.globalCompositeOperation = 'destination-in'
     inkCtx.drawImage(mask, 0, 0)
@@ -465,7 +465,7 @@ export default function OpenJournalScene({
       ctx.textAlign = 'center'
       ctx.fillText(label, labelX, labelY)
       const detailX = box[0] + box[2] / 2
-      const detailY = box[1] + 58
+      const detailY = box[1] + 69
       const inkIsVisible = maskCanvasRef.current
         ?.getContext('2d')
         .getImageData(Math.round(detailX), Math.round(detailY), 1, 1).data[3] > 32
