@@ -390,24 +390,27 @@ export default function OpenJournalScene({
     liquidStreamStyle.transformOrigin = '6px 0'
   }
   const vialRigStyle = {
-    ...vialStyle,
+    left: 0,
+    top: 0,
+    width: '100%',
+    height: '100%',
     transform: `rotate(${vialAngle}deg)`,
   }
   const openVialHintStyle = cover && sceneBounds
     ? (() => {
       const scale = cover.scale
       const width = Math.min(Math.max(236 * scale, 140), Math.max(140, sceneBounds.width - 32))
-      const height = Math.max(32, 38 * scale)
-      const arrowTop = cover.top + (vialNeck.y - 49) * scale
-      const left = cover.left + vialNeck.x * scale - width / 2
+      const anchorLeft = cover.left + vialPosition.x * scale
+      const labelCenter = cover.left + vialNeck.x * scale
+      const labelLeft = labelCenter - width / 2 - 10 * scale
+      const gapAboveArrow = (49 - VIAL_SIZE.height * 0.13) * scale + 10
       return {
-        left: Math.min(Math.max(16, left), Math.max(16, sceneBounds.width - width - 16)),
-        top: Math.max(12, arrowTop - height - 10),
+        left: labelLeft - anchorLeft,
         width,
-        height,
+        bottom: `calc(100% + ${gapAboveArrow}px)`,
       }
     })()
-    : positionOnScene([vialNeck.x - 118, vialNeck.y - 92, 236, 38])
+    : undefined
   const pageHover = (event) => {
     const lens = inspectionCanvasRef.current
     const ctx = lens?.getContext('2d')
@@ -534,16 +537,25 @@ export default function OpenJournalScene({
         <img src={MAGNIFIER_IMAGE} alt="" draggable="false" />
       </button>
 
-      <div className="open-journal-scene__vial-rig" style={vialRigStyle}>
-        <button
-          type="button"
-          className={`open-journal-scene__object open-journal-scene__vial${vialSelected ? ' is-selected' : ''}${pouring ? ' is-pouring' : ''}`}
-          style={{ left: 0, top: 0, width: '100%', height: '100%' }}
-          aria-label={corkOpened ? 'Open vial; drag and tilt over the pages to reveal ink' : 'Select the chemical vial'}
-          aria-pressed={vialSelected}
-          onClick={(event) => { event.stopPropagation(); setVialSelected(true) }}
-          onPointerDown={startDrag('vial', VIAL_SIZE)}
-          onKeyDown={(event) => {
+      <div className="open-journal-scene__vial-anchor" style={vialStyle}>
+        <span
+          className={`open-journal-scene__hint open-journal-scene__hint--open${corkOpened ? ' is-dismissed' : ''}`}
+          style={openVialHintStyle}
+          aria-live="polite"
+          aria-hidden={corkOpened}
+        >
+          Open the vial
+        </span>
+        <div className="open-journal-scene__vial-rig" style={vialRigStyle}>
+          <button
+            type="button"
+            className={`open-journal-scene__object open-journal-scene__vial${vialSelected ? ' is-selected' : ''}${pouring ? ' is-pouring' : ''}`}
+            style={{ left: 0, top: 0, width: '100%', height: '100%' }}
+            aria-label={corkOpened ? 'Open vial; drag and tilt over the pages to reveal ink' : 'Select the chemical vial'}
+            aria-pressed={vialSelected}
+            onClick={(event) => { event.stopPropagation(); setVialSelected(true) }}
+            onPointerDown={startDrag('vial', VIAL_SIZE)}
+            onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') setVialSelected(true)
           if (!corkOpened) return
           if (event.shiftKey && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
@@ -564,49 +576,50 @@ export default function OpenJournalScene({
             return
           }
           moveByKeyboard(setVialPosition, vialPosition, VIAL_SIZE, event)
-          }}
-          onKeyUp={(event) => {
+            }}
+            onKeyUp={(event) => {
             if (event.key.startsWith('Arrow')) {
               setVialAngle(0)
               setPouring(false)
               setPourPoint(null)
             }
-          }}
-        >
-          <img src={VIAL_IMAGE} alt="" draggable="false" />
-        </button>
-        <button
-          type="button"
-          className={`open-journal-scene__cork-hit${corkOpened ? ' is-open' : ''}`}
-          style={{ left: '-9%', top: '-13%', width: '75%', height: '48%' }}
-          aria-label={corkOpened ? 'Cork removed' : 'Remove vial cork'}
-          aria-pressed={corkOpened}
-          onClick={openCork}
-          onPointerDown={startCorkRelease}
-        >
-          <span className="open-journal-scene__cork-visual">
-            <img src={CORK_IMAGE} alt="" draggable="false" />
-          </span>
-        </button>
-      </div>
-      <div className="open-journal-scene__vial-guidance" aria-live="polite">
-        <span
-          className={`open-journal-scene__hint open-journal-scene__hint--open${corkOpened ? ' is-dismissed' : ''}`}
-          style={openVialHintStyle}
-          aria-hidden={corkOpened}
-        >
-          Open the vial
-        </span>
+            }}
+          >
+            <img src={VIAL_IMAGE} alt="" draggable="false" />
+          </button>
+          <button
+            type="button"
+            className={`open-journal-scene__cork-hit${corkOpened ? ' is-open' : ''}`}
+            style={{ left: '-9%', top: '-13%', width: '75%', height: '48%' }}
+            aria-label={corkOpened ? 'Cork removed' : 'Remove vial cork'}
+            aria-pressed={corkOpened}
+            onClick={openCork}
+            onPointerDown={startCorkRelease}
+          >
+            <span className="open-journal-scene__cork-visual">
+              <img src={CORK_IMAGE} alt="" draggable="false" />
+            </span>
+          </button>
+        </div>
         <svg
           className={`open-journal-scene__vial-arrow${corkOpened ? ' is-dismissed' : ''}`}
-          style={positionOnScene([vialNeck.x - 17, vialNeck.y - 49, 34, 50])}
+          style={{
+            left: `${VIAL_SIZE.width * 0.31 - 17}px`,
+            top: '-58px',
+            width: '34px',
+            height: '58px',
+            transform: `scale(${cover.scale})`,
+            transformOrigin: '17px 58px',
+          }}
           viewBox="0 0 34 50"
           aria-hidden="true"
           focusable="false"
         >
-          <path d="M 17 1 C 17 15, 17 31, 17 47" />
+          <path d="M 17 1 L 17 47" />
           <path className="open-journal-scene__vial-arrowhead" d="M 10 39 L 17 49 L 24 39" />
         </svg>
+      </div>
+      <div className="open-journal-scene__vial-guidance" aria-live="polite">
         <span
           className={`open-journal-scene__hint open-journal-scene__hint--pour${!corkOpened || pourStarted || pouring ? ' is-dismissed' : ''}`}
           style={positionOnScene([vialNeck.x - 165, vialNeck.y - 92, 330, 44])}

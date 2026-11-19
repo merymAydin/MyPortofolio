@@ -4,6 +4,44 @@ import { createPortal } from 'react-dom'
 const PORTRAIT_SOURCE = '/reference/pfp.png'
 const MAGNIFIER_SOURCE = '/reference/antique-magnifying-glass.png'
 
+function getElementGeometry(element) {
+  const rect = element.getBoundingClientRect()
+  const style = window.getComputedStyle(element)
+  const matrix = style.transform === 'none' ? new DOMMatrix() : new DOMMatrix(style.transform)
+  const [originX = 0, originY = 0] = style.transformOrigin.split(' ').map(Number.parseFloat)
+  const width = element.offsetWidth
+  const height = element.offsetHeight
+  const borderLeft = Number.parseFloat(style.borderLeftWidth) || 0
+  const borderTop = Number.parseFloat(style.borderTopWidth) || 0
+  const transformPoint = (x, y) => ({
+    x: matrix.a * (x - originX) + matrix.c * (y - originY) + matrix.e + originX,
+    y: matrix.b * (x - originX) + matrix.d * (y - originY) + matrix.f + originY,
+  })
+  const transformedCorners = [
+    transformPoint(0, 0),
+    transformPoint(width, 0),
+    transformPoint(0, height),
+    transformPoint(width, height),
+  ]
+  const layoutLeft = rect.left - Math.min(...transformedCorners.map(({ x }) => x))
+  const layoutTop = rect.top - Math.min(...transformedCorners.map(({ y }) => y))
+  const determinant = matrix.a * matrix.d - matrix.b * matrix.c
+
+  return {
+    toClient(x, y) {
+      const point = transformPoint(x + borderLeft, y + borderTop)
+      return { x: layoutLeft + point.x, y: layoutTop + point.y }
+    },
+    fromClient(clientX, clientY) {
+      const x = clientX - layoutLeft - matrix.e - originX
+      const y = clientY - layoutTop - matrix.f - originY
+      const localX = (matrix.d * x - matrix.c * y) / determinant + originX
+      const localY = (-matrix.b * x + matrix.a * y) / determinant + originY
+      return { x: localX - borderLeft, y: localY - borderTop }
+    },
+  }
+}
+
 /**
  * A draggable inspection lens for the author portrait.
  * The portrait remains a real image for accessibility; the canvas only adds
@@ -19,7 +57,6 @@ export default function PortraitMagnifier({ onLensMove = () => {}, surfaceRef })
   const hasInspectedRef = useRef(false)
   const [lensPosition, setLensPosition] = useState({ x: 0, y: 20 })
   const [stageSize, setStageSize] = useState({ width: 0, height: 0 })
-  const [surfaceRect, setSurfaceRect] = useState(null)
   const [surfaceNode, setSurfaceNode] = useState(null)
 
   const getMagnifierSize = (width) => {
@@ -38,9 +75,22 @@ export default function PortraitMagnifier({ onLensMove = () => {}, surfaceRef })
     const surface = surfaceRef?.current
     const stage = stageRef.current
     if (!surface || !stage) return null
-    const surfaceRect = surface.getBoundingClientRect()
+    const geometry = getElementGeometry(surface)
     const stageRect = stage.getBoundingClientRect()
-    return { surfaceRect, stageRect }
+    const stageCenter = geometry.fromClient(
+      stageRect.left + stageRect.width / 2,
+      stageRect.top + stageRect.height / 2,
+    )
+    return {
+      surface: { width: surface.clientWidth, height: surface.clientHeight },
+      stageSize: { width: stage.clientWidth, height: stage.clientHeight },
+      stagePosition: {
+        x: stageCenter.x - stage.clientWidth / 2,
+        y: stageCenter.y - stage.clientHeight / 2,
+      },
+      toSurfacePoint: geometry.fromClient,
+      toClientPoint: geometry.toClient,
+    }
   }, [surfaceRef])
 
   const drawLens = useCallback(() => {
@@ -49,27 +99,26 @@ export default function PortraitMagnifier({ onLensMove = () => {}, surfaceRef })
     const canvas = canvasRef.current
     if (!stage || !portrait || !canvas || !portrait.complete) return
 
-    const rect = stage.getBoundingClientRect()
-    if (!rect.width || !rect.height) return
+    const metrics = getSurfaceMetrics()
+    if (!metrics) return
+    const { width, height } = metrics.stageSize
+    if (!width || !height) return
 
     const ratio = window.devicePixelRatio || 1
-    const pixelWidth = Math.round(rect.width * ratio)
-    const pixelHeight = Math.round(rect.height * ratio)
+    const pixelWidth = Math.round(width * ratio)
+    const pixelHeight = Math.round(height * ratio)
     if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
       canvas.width = pixelWidth
       canvas.height = pixelHeight
     }
-    canvas.style.width = `${rect.width}px`
-    canvas.style.height = `${rect.height}px`
 
     const ctx = canvas.getContext('2d')
     if (!ctx) return
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0)
-    ctx.clearRect(0, 0, rect.width, rect.height)
+    ctx.clearRect(0, 0, width, height)
 
-    const { width: magnifierWidth, height: magnifierHeight } = getMagnifierSize(rect.width)
-    const stageOffsetX = surfaceRect ? rect.left - surfaceRect.left : 0
-    const stageOffsetY = surfaceRect ? rect.top - surfaceRect.top : 0
+    const { width: magnifierWidth, height: magnifierHeight } = getMagnifierSize(width)
+    const { x: stageOffsetX, y: stageOffsetY } = metrics.stagePosition
     const localLensPosition = {
       x: lensPosition.x - stageOffsetX,
       y: lensPosition.y - stageOffsetY,
@@ -84,12 +133,16 @@ export default function PortraitMagnifier({ onLensMove = () => {}, surfaceRef })
     // The canvas is transparent when the independently movable tool is away
     // from the portrait, so the portrait returns to its normal appearance.
     const overlapsPortrait = lensCenter.x + radius > 0
-      && lensCenter.x - radius < rect.width
+      && lensCenter.x - radius < width
       && lensCenter.y + radius > 0
-      && lensCenter.y - radius < rect.height
+      && lensCenter.y - radius < height
+    const screenLensCenter = metrics.toClientPoint(
+      lensPosition.x + magnifierWidth * 0.57,
+      lensPosition.y + magnifierHeight * 0.26,
+    )
     onLensMove({
-      x: rect.left + lensCenter.x,
-      y: rect.top + lensCenter.y,
+      x: screenLensCenter.x,
+      y: screenLensCenter.y,
       radius,
       overlapsPortrait,
       hasInspected: hasInspectedRef.current,
@@ -103,25 +156,24 @@ export default function PortraitMagnifier({ onLensMove = () => {}, surfaceRef })
     ctx.translate(lensCenter.x - lensCenter.x * zoom, lensCenter.y - lensCenter.y * zoom)
     ctx.scale(zoom, zoom)
     ctx.beginPath()
-    ctx.ellipse(rect.width / 2, rect.height / 2, rect.width * 0.385, rect.height * 0.41, 0, 0, Math.PI * 2)
+    ctx.ellipse(width / 2, height / 2, width * 0.385, height * 0.41, 0, 0, Math.PI * 2)
     ctx.clip()
-    ctx.drawImage(portrait, 0, 0, rect.width, rect.height)
+    ctx.drawImage(portrait, 0, 0, width, height)
     ctx.restore()
-  }, [lensPosition, onLensMove, surfaceRect])
+  }, [getSurfaceMetrics, lensPosition, onLensMove])
 
   useEffect(() => {
     const stage = stageRef.current
-    if (!stage) return undefined
+    const surface = surfaceRef?.current
+    if (!stage || !surface) return undefined
 
     const resize = () => {
-      const rect = stage.getBoundingClientRect()
-      const surface = surfaceRef?.current?.getBoundingClientRect()
-      if (!surface) return
-      setStageSize({ width: rect.width, height: rect.height })
-      setSurfaceRect(surface)
-      setSurfaceNode(surfaceRef.current)
-      const { width: magnifierWidth, height: magnifierHeight } = getMagnifierSize(rect.width)
-      const bounds = getMovementBounds(surface, magnifierWidth, magnifierHeight)
+      const metrics = getSurfaceMetrics()
+      if (!metrics) return
+      setStageSize(metrics.stageSize)
+      setSurfaceNode(surface)
+      const { width: magnifierWidth, height: magnifierHeight } = getMagnifierSize(metrics.stageSize.width)
+      const bounds = getMovementBounds(metrics.surface, magnifierWidth, magnifierHeight)
       setLensPosition((current) => {
         if (!hasInitialisedRef.current) {
           hasInitialisedRef.current = true
@@ -130,11 +182,11 @@ export default function PortraitMagnifier({ onLensMove = () => {}, surfaceRef })
             // glass over it when they want to inspect the silhouette.
             x: Math.min(
               bounds.maxX,
-              Math.max(bounds.minX, rect.left - surface.left + rect.width - magnifierWidth),
+              Math.max(bounds.minX, metrics.stagePosition.x + metrics.stageSize.width - magnifierWidth),
             ),
             y: Math.min(
               bounds.maxY,
-              Math.max(bounds.minY, rect.top - surface.top + Math.max(8, rect.height * 0.06)),
+              Math.max(bounds.minY, metrics.stagePosition.y + Math.max(8, metrics.stageSize.height * 0.06)),
             ),
           }
         }
@@ -148,8 +200,9 @@ export default function PortraitMagnifier({ onLensMove = () => {}, surfaceRef })
     resize()
     const observer = new ResizeObserver(resize)
     observer.observe(stage)
+    observer.observe(surface)
     return () => observer.disconnect()
-  }, [surfaceRef])
+  }, [getSurfaceMetrics, surfaceRef])
 
   useEffect(() => {
     drawLens()
@@ -162,12 +215,12 @@ export default function PortraitMagnifier({ onLensMove = () => {}, surfaceRef })
     hasInspectedRef.current = true
     const metrics = getSurfaceMetrics()
     if (!metrics) return
-    const { surfaceRect, stageRect: rect } = metrics
-    const { width: magnifierWidth, height: magnifierHeight } = getMagnifierSize(rect.width)
-    const bounds = getMovementBounds(surfaceRect, magnifierWidth, magnifierHeight)
+    const point = metrics.toSurfacePoint(clientX, clientY)
+    const { width: magnifierWidth, height: magnifierHeight } = getMagnifierSize(metrics.stageSize.width)
+    const bounds = getMovementBounds(metrics.surface, magnifierWidth, magnifierHeight)
     setLensPosition({
-      x: Math.min(Math.max(bounds.minX, clientX - surfaceRect.left - drag.offsetX), bounds.maxX),
-      y: Math.min(Math.max(bounds.minY, clientY - surfaceRect.top - drag.offsetY), bounds.maxY),
+      x: Math.min(Math.max(bounds.minX, point.x - drag.offsetX), bounds.maxX),
+      y: Math.min(Math.max(bounds.minY, point.y - drag.offsetY), bounds.maxY),
     })
   }, [getSurfaceMetrics])
 
@@ -194,11 +247,11 @@ export default function PortraitMagnifier({ onLensMove = () => {}, surfaceRef })
     if (!stage) return
     const metrics = getSurfaceMetrics()
     if (!metrics) return
-    const { surfaceRect } = metrics
+    const point = metrics.toSurfacePoint(event.clientX, event.clientY)
     dragRef.current = {
       pointerId: event.pointerId,
-      offsetX: event.clientX - surfaceRect.left - lensPosition.x,
-      offsetY: event.clientY - surfaceRect.top - lensPosition.y,
+      offsetX: point.x - lensPosition.x,
+      offsetY: point.y - lensPosition.y,
     }
     const move = (nativeEvent) => {
       if (nativeEvent.pointerId !== event.pointerId) return
@@ -235,9 +288,9 @@ export default function PortraitMagnifier({ onLensMove = () => {}, surfaceRef })
     hasInspectedRef.current = true
     event.preventDefault()
     const { width: magnifierWidth, height: magnifierHeight } = getMagnifierSize(stageSize.width)
-    const surface = surfaceRef?.current?.getBoundingClientRect()
-    const bounds = surface
-      ? getMovementBounds(surface, magnifierWidth, magnifierHeight)
+    const metrics = getSurfaceMetrics()
+    const bounds = metrics
+      ? getMovementBounds(metrics.surface, magnifierWidth, magnifierHeight)
       : { minX: 0, minY: 0, maxX: 0, maxY: 0 }
     setLensPosition((current) => ({
       x: Math.min(Math.max(bounds.minX, current.x + dx), bounds.maxX),
@@ -247,7 +300,7 @@ export default function PortraitMagnifier({ onLensMove = () => {}, surfaceRef })
 
   const { width: magnifierWidth, height: magnifierHeight } = getMagnifierSize(stageSize.width || 200)
 
-  const handle = surfaceRect && surfaceNode
+  const handle = surfaceNode
     ? createPortal(
       <button
         type="button"
